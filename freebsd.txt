@@ -1,0 +1,4 @@
+
+gpart bootcode -b /boot/boot0 ada0 bzw. ada0p6
+
+The UEFI boot loader received several improvements: It now follows /boot/config and /boot.config files [...]

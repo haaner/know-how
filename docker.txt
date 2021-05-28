@@ -1,0 +1,36 @@
+- Images anzeigen
+
+docker images
+
+- Container anzeigen
+
+docker container ls
+
+- Programm im laufenden Container starten (z.B. bash im Container shpware-latest)
+
+docker exec -it shopware-latest bash 
+
+- Existierende Volumes verwenden und Port-Mappings manuell spezifizieren
+
+docker run -p 80:80 -p 3306:3306 -p 2222:22 -p 8888:8888 -p 9999:9999 -d --name shopware --mount source=dockware_db_volume-sw,target=/var/lib/mysql --mount source=dockware_shop_volume-sw,target=/var/www/html dockware/dev:latest [/entrypoint.sh]
+
+- Container-Anpasungen ins Image schreiben
+
+docker commit shopware dockware/dev:latest
+
+- Child-Image mit allen Parent-Images zusammenfassen (History bleibt)
+
+docker save dockware/dev:child > child.tar
+#docker rmi dockware/dev:child 
+#docker image prune
+docker load < child.tar
+
+- Image umbenennen
+
+docker tag <old_name> <new_name>
+docker rmi <old_name>
+
+- Child-Image mit allen Parent-Images mittels existierenden Container zusammenfassen (History geht verloren)
+
+docker export --output shopware.tar shopware
+docker import --change "ENTRYPOINT /entrypoint.sh" shopware.tar dockware:heiko   
