@@ -1,0 +1,129 @@
+- Precedence:
+
+	Specificity is calculated by counting various components of your css and expressing them in a form (a,b,c,d). This will be clearer with an example, but first the components.
+
+		Element, Pseudo Element: d = (0,0,0,1)
+		Class, Pseudo class, Attribute: c = (0,0,1,0)
+		Id: b = (0,1,0,0)
+		Inline Style: a = (1,0,0,0)
+
+	An id is more specific than a class is more specific than an element.
+
+	You calculate specificity by counting each of the above and adding 1 to either a,b,c, or d. It’s also important to note that 0,0,1,0 is more specific than 0,0,0,15. Let’s look at some examples to make the calculation clearer.
+
+		p: 1 element – (0,0,0,1)
+		div: 1 element – (0,0,0,1)
+		#sidebar: 1 id – (0,1,0,0)
+		div#sidebar: 1 element, 1 id – (0,1,0,1)
+		div#sidebar p: 2 elements, 1 id – (0,1,0,2)
+		div#sidebar p.bio: 2 elements, 1 class, 1 id – (0,1,1,2)
+		
+- Responsive Table:
+
+	siehe: https://wiki.selfhtml.org/wiki/HTML/Multimedia_und_Grafiken/picture
+
+	====
+
+	@media screen and (max-width: 45em) {
+		tr, th, td {
+			display: block;
+		}
+	 
+		tr {
+			padding: 1em;
+			border-top: 0 none;
+		}
+	 
+		th {
+			padding: 0;
+		}
+	 
+		td {
+			padding: 1em 0 0;
+		}
+	}
+
+	---------------------------
+
+	@media screen and (max-width: 42em) {
+			table, tbody, tr {
+			display: block;
+			}
+		thead {
+			display: none;
+		}
+		tr:first-child {
+			border-top: 2px solid lightblue;
+		}
+		tr {
+			border-bottom: 2px solid lightblue;
+			padding: .5em 2em 1em;
+		}
+		th::before {
+			content: "Rechnung: ";
+		}
+		td:nth-child(2)::before {
+			content: "Datum: ";
+		}
+		td:nth-child(3)::before {
+			content: "Höhe: ";
+		}
+		td:nth-child(4)::before {
+			content: "Status: ";
+		}
+		td.paid + td::before {
+			content: "Zahlungseingang: ";
+		}
+		tbody th {
+			display: block;
+			font-weight: bold;
+		}
+		th a {
+			font-weight: normal;
+		}
+		td {
+			display: inline-block;
+			min-width: 30%;
+			padding: .2em 2em;
+			text-align: left;
+		}
+		td:nth-child(3) {
+			text-align: left;
+		}
+	}
+	@media screen and (max-width: 33em) {
+		td {
+			display: block;
+		}
+			tr {
+					padding: .5em .5em 1em;
+			}
+	}		
+
+- Vertikal Zentrieren:
+
+	https://css-tricks.com/centering-in-the-unknown/
+	
+	/* This parent can be any width and height */
+	.block {
+	  text-align: center;
+
+	  /* May want to do this if there is risk the container may be narrower than the element inside */
+	  white-space: nowrap;
+	}
+	 
+	/* The ghost, nudged to maintain perfect centering */
+	.block:before {
+	  content: '';
+	  display: inline-block;
+	  height: 100%;
+	  vertical-align: middle;
+	  margin-right: -0.25em; /* Adjusts for spacing */
+	}
+
+	/* The element to be centered, can also be of any width and height */ 
+	.centered {
+	  display: inline-block;
+	  vertical-align: middle;
+	  width: 300px;
+	}

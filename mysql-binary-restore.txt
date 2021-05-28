@@ -1,0 +1,38 @@
+Wenn es sich um eine MyISAM-Tabelle handelt:
+
+- Die Dateien *.frm, *.MYD, *.MYI in ein Datenbank-Verzeichnis "my_restore" unterhalb von /var/lib/mysql kopieren.
+
+# cp myTable.* /var/lib/mysql/my_restore
+# chown -R mysql:mysql /var/lib/mysql/my_restore
+
+- Den MySQL-Serverprozess reloaden bzw neu-starten:
+
+# /etc/init.d/mysql reload
+
+---
+
+Wenn sich um eine INNODB-Tabelle handelt:
+
+- Die ursprüngliche CREATE-Befehle neu generieren lassen:
+
+# mysqlfrm --diagnostic myTable.frm > myTable.sql
+
+- Das Row-Format der wiederherzustellenden-Tabelle ermitteln und gg.falls den CREATE-Befehl anpassen, z.B.
+
+CREATE TABLE my_restore.myTable ... ENGINE=Innodb ROW_FORMAT=Compact
+
+- Mit MySQL-Server verbinden und das sql-File sourcen und danach die implizit erzeugte ibd-Datei discarden:
+
+mysql> SOURCE myTable.sql;
+mysql> ALTER TABLE myTable DISCARD TABLESPACE;
+
+- Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausführen:
+
+# cp myTable.ibd /var/lib/mysql/my_restore
+# chown -R mysql:mysql /var/lib/mysql/my_restore
+
+mysql> ALTER TABLE myTable IMPORT TABLESPACE;
+
+- Importierte Daten begutachten:
+
+mysql> SELECT * FROM myTable;
