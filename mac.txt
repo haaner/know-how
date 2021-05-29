@@ -1,0 +1,71 @@
+- Boot Sound de-/aktivieren
+
+sudo nvram SystemAudioVolume=%00
+sudo nvram -d SystemAudioVolume
+
+- Reset Root Passwd:
+
+CMD+S
+
+fsck -fy /
+mount -uw /
+
+launchtl load /System/Library/LaunchDaemons/com.apple.opendirectory.plist 
+passwd root
+
+---
+
+- Login Hooks:
+
+sudo defaults write com.apple.loginwindow LoginHook /path/to/script
+[ writes to /var/root/Library/Preferences/com.apple.loginwindow ]
+
+
+- Plain Text Email
+
+defaults write com.apple.mail PreferPlainText -bool TRUE
+
+- Tool Tips
+
+defaults write -g NSInitialToolTipDelay -int 10000
+
+- Key Bindings:
+
+file: ~/Library/KeyBindings/DefaultKeyBinding.dict
+
+content:
+{
+  /* Remap Home / End to be correct */
+  "\UF729" = "moveToBeginningOfLine:"; /* Home */
+  "\UF72B" = "moveToEndOfLine:"; /* End */
+  "$\UF729" = "moveToBeginningOfLineAndModifySelection:"; /* Shift + Home */
+  "$\UF72B" = "moveToEndOfLineAndModifySelection:"; /* Shift + End */
+}
+{
+  "\UF729" = "moveToBeginningOfLine:";
+  "^\UF729" = "moveToBeginningOfDocument:";
+  "$\UF729" = "moveToBeginningOfLineAndModifySelection:";
+  "$^\UF729" = "moveToBeginningOfDocumentAndModifySelection:";
+
+  "\UF72B" = "moveToEndOfLine:";
+  "^\UF72B" = "moveToEndOfDocument:";
+  "$\UF72B" = "moveToEndOfLineAndModifySelection:";
+  "$^\UF72B" = "moveToEndOfDocumentAndModifySelection:";
+
+  "^\U007F" = "deleteWordBackward:";
+  "^\UF728" = "deleteWordForward:";
+
+  "^\UF703" = "moveWordForward:";
+  "$^\UF703" = "moveWordForwardAndModifySelection:";
+  "^\UF702" = "moveWordBackward:";
+  "$^\UF702" = "moveWordBackwardAndModifySelection:";
+
+  "\UF72C" = "pageUp:";
+  "\UF72D" = "pageDown:";
+
+  "^z" = "undo:";
+
+  "$\UF728" = "cut:";
+  "$\UF746" = "paste:";
+  "^\UF746" = "copy:";
+}

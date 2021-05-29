@@ -1,0 +1,7 @@
+- Branch von Origin auschecken und Mapping auf lokalen Branch angeben
+
+$ git checkout -b nomobile origin/nomobile
+
+- Ignoriere alle gg.wärtig nicht mehr vorhandenen Dateien beim nächsten Commit
+$ git ls-files --deleted -z | git update-index --assume-unchanged -z --stdin 
+
