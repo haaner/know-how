@@ -6,7 +6,7 @@ docker images
 
 docker container ls
 
-- Programm im laufenden Container starten (z.B. bash im Container shpware-latest)
+- Programm im laufenden Container starten (z.B. bash im Container shopware-latest)
 
 docker exec -it shopware-latest bash 
 
