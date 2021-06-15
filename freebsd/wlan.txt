@@ -1,0 +1,35 @@
+Introduction
+
+Setting up wireless networking on FreeBSD is not as complex as in the past. Here’s the short form. The examples that follow show a RealTek wireless device using the urtw(4) driver.
+Setup For Automatic Wireless Connection
+
+If needed, load driver modules in /boot/loader.conf.
+
+if_urtw_load="YES"
+
+Create /etc/wpa_supplicant.conf with SSID and PSK.
+
+network={
+        ssid="myssid"
+        psk="myultrasecretkey"
+}
+
+Modify /etc/rc.conf to create wlan0 and connect:
+
+wlans_urtw0="wlan0"
+ifconfig_wlan0="WPA SYNCDHCP"
+
+On startup, FreeBSD will automatically connect.
+
+That’s it, pretty much all you need. Stop here unless you want to manually start a wireless connection.
+Command Line Manual Method
+
+(1) # kldload if_urtw  1
+(2) # ifconfig wlan0 create wlandev urtw0  2
+(3) # wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant.conf  3
+(4) # dhclient wlan0  4
+
+(1)	If your wireless card driver isn’t built into the GENERIC kernel, or you use a custom kernel without it, the driver module must be loaded first. Some devices also need firmware modules, usually provided by a port. See the man page for your device.
+(2)	Create a generic wireless device for the wireless network code to use.
+(3)	Run wpa_supplicant(8) to associate to an access point defined in /etc/wpa_supplicant.conf.
+(4) Get an IP address and DNS servers. 

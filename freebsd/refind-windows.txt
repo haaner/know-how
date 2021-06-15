@@ -1,0 +1,23 @@
+https://sourceforge.net/projects/refind/files/ 
+
+1. Locate Command Prompt in the Start menu, right-click it, and select Run as Administrator. This action opens a Command Prompt window with administrative privileges.
+
+2. Type mountvol S: /S in the Administrator Command Prompt window. This makes the ESP accessible as drive S: from that window. (You can use a drive identifier other than S: if you like.)
+
+3. Change into the main rEFInd package directory, so that the refind subdirectory is visible when you type dir.
+
+4. Type xcopy /E refind S:\EFI\refind\ to copy the refind directory tree to the ESP's EFI directory. If you omit the trailing backslash from this command, xcopy will ask if you want to create the refind directory. Tell it to do so.
+
+5. Type S: to change to the ESP.
+  
+6. Type cd EFI\refind to change into the refind subdirectory
+  
+7. You may want to selectively delete some of the drivers in the drivers_x64, drivers_ia32, or drivers_aa64 directory, depending on your architecture and needs. Unnecessary drivers will slow the rEFInd start process, and can even cause the drivers you need to not work or cause a system crash. See the page on drivers for more on this topic.
+  
+8. Type rename refind.conf-sample refind.conf to rename rEFInd's configuration file.
+
+9. Type bcdedit /set "{bootmgr}" path \EFI\refind\refind_x64.efi to set rEFInd as the default EFI boot program. Note that "{bootmgr}" is entered as such, including both the quotes and braces ({}). Also, change refind_x64.efi to refind_ia32.efi on systems with 32-bit EFIs. Such computers are rare, and most of them are tablets. Check your Windows bit depth to determine which binary you should use.
+   
+10. If you like, type bcdedit /set "{bootmgr}" description "rEFInd description" to set a description (change rEFInd description as you see fit).
+
+[ http://www.rodsbooks.com/refind/installing.html#windows ]
