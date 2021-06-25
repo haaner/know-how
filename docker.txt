@@ -10,6 +10,18 @@ docker container ls
 
 docker exec -it shopware-latest bash 
 
+- Volume löschen
+
+docker volume rm vol-xy
+
+- Docker-Compose ausführen
+
+docker compose up 
+
+- Docker-Compose ausführen und eingebundene Dockerfiles re-builden
+
+docker compose up 
+
 - Existierende Volumes verwenden und Port-Mappings manuell spezifizieren
 
 docker run -p 80:80 -p 3306:3306 -p 2222:22 -p 8888:8888 -p 9999:9999 -d --name shopware --mount source=dockware_db_volume-sw,target=/var/lib/mysql --mount source=dockware_shop_volume-sw,target=/var/www/html dockware/dev:latest [/entrypoint.sh]
