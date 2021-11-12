@@ -1,0 +1,7 @@
+- Xdebug3 Config:
+
+zend_extension=xdebug.so
+xdebug.mode=debug
+xdebug.discover_client_host=true
+xdebug.max_nesting_level=1000
+xdebug.idekey="PHPSTORM"
