@@ -38,6 +38,13 @@ Grub:
 		1511  pstree
 		1512  reboot
 		
+Services:
+
+	systemctl list-unit-files | grep enabled
+	systemctl enable php7.4-fpm-eibe
+
+	service apache2 restart
+
 MySQL:
 
 	- Alle Tabellen und den zugehörigen LOCK-Status anzeigen:
