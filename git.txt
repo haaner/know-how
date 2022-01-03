@@ -133,11 +133,14 @@
 	git rm path/to/module               # clean WD and .gitmodules
 	rm -rf .git/modules/path/to/module  # remove the repository
 	
+- Nicht mehr genutzte Tracking-Branches entfernen
+
+	git remote prune origin 
+	
 - Gelöschte Datei: Letzten Commit finden  	
 
 	git log --full-history  -- frontend/accedo/templates/css/styles_advertorial.css
 
-	
 - Gelöschten Branch ermitteln und wiederherstellen
 
 	git reflog 

@@ -171,6 +171,14 @@ SVN:
 	Add only directory but no contents:
 		svn add --depth=empty <dir>
 		
+Mail / v33:
+
+	Zertifikate ausgeben:
+		openssl s_client -connect mail.intercorp.de:465
+		openssl s_client -connect mail.intercorp.de:25 -starttls smtp
+		openssl s_client -connect mail.intercorp.de:587 -starttls smtp
+		echo 'quit' | openssl s_client -connect mail.intercorp.de:587 -starttls smtp | openssl x509 -dates -noout
+		
 Xen:
 
 	xl list 
