@@ -170,9 +170,9 @@ SVN:
 
 	Add only directory but no contents:
 		svn add --depth=empty <dir>
-		
-Mail / v33:
 
+SSL:
+		
 	Zertifikate ausgeben:
 		openssl s_client -connect mail.intercorp.de:465
 		openssl s_client -connect mail.intercorp.de:25 -starttls smtp
@@ -180,6 +180,14 @@ Mail / v33:
 
    Ablaufdatum des Zertifikats ausgeben:
    	echo 'quit' | openssl s_client -connect staging.shop.eibe.de:443 | openssl x509 -dates -noout
+
+	LetsEncrypt-Zertifikat ausstellen:
+		 letsencrypt certonly --webroot -w
+/var/www/vhosts/staub-designlight.ch/letsencrypt/ -d dev.staub-designlight.ch
+-d www.staub-designlight.ch -d staub-designlight.ch -d
+www.staub-designlight.com -d staub-designlight.com  -d
+www.staub-designlight.de -d staub-designlight.de -d www.staub-designlight.fr
+-d staub-designlight.fr -d www.staub-dl.ch -d staub-dl.ch
 		
 Xen:
 
