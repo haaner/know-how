@@ -177,7 +177,9 @@ Mail / v33:
 		openssl s_client -connect mail.intercorp.de:465
 		openssl s_client -connect mail.intercorp.de:25 -starttls smtp
 		openssl s_client -connect mail.intercorp.de:587 -starttls smtp
-		echo 'quit' | openssl s_client -connect mail.intercorp.de:587 -starttls smtp | openssl x509 -dates -noout
+
+   Ablaufdatum des Zertifikats ausgeben:
+   	echo 'quit' | openssl s_client -connect staging.shop.eibe.de:443 | openssl x509 -dates -noout
 		
 Xen:
 
