@@ -47,6 +47,14 @@ Services:
 
 MySQL:
 
+   - root-Passwort in Datei (.mylogin.cnf) speichern
+		
+		mysql_config_editor set --host=127.0.0.1 --user=root --password
+
+	- root-Passwort ändern
+
+		ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'yourpasswd';
+
 	- Alle Tabellen und den zugehörigen LOCK-Status anzeigen:
 	
 		SHOW OPEN TABLES
