@@ -23,7 +23,6 @@ zfs destroy -r oldzroot@movedata
 
 # IMPORTANT: This is needed so that zfsloader finds the right bootfs, otherwise it will will complain about missing "loader.lua"
 zpool set bootfs=zroot/ROOT/default zroot 
-	[exec] (Evolution) { evolution }
 ```
 
 ---

@@ -47,6 +47,14 @@ Services:
 
 MySQL:
 
+   - root-Passwort in Datei (.mylogin.cnf) speichern
+		
+		mysql_config_editor set --host=127.0.0.1 --user=root --password
+
+	- root-Passwort ändern
+
+		ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'yourpasswd';
+
 	- Alle Tabellen und den zugehörigen LOCK-Status anzeigen:
 	
 		SHOW OPEN TABLES
@@ -71,46 +79,46 @@ MySQL:
 	
 		SELECT SUM(sub.totals) FROM (SELECT COUNT(*) AS totals FROM `MetaField` GROUP BY srcId) AS sub
 
+	- Tabellen / Daten aus Binärdateien wiederherstellen:
+		
+		Wenn es sich um eine MyISAM-Tabelle handelt:
 
-Wenn es sich um eine MyISAM-Tabelle handelt:
+		- Die Dateien *.frm, *.MYD, *.MYI in ein Datenbank-Verzeichnis "my_restore" unterhalb von /var/lib/mysql kopieren.
 
-- Die Dateien *.frm, *.MYD, *.MYI in ein Datenbank-Verzeichnis "my_restore" unterhalb von /var/lib/mysql kopieren.
+		# cp myTable.* /var/lib/mysql/my_restore
+		# chown -R mysql:mysql /var/lib/mysql/my_restore
 
-# cp myTable.* /var/lib/mysql/my_restore
-# chown -R mysql:mysql /var/lib/mysql/my_restore
+		- Den MySQL-Serverprozess reloaden bzw neu-starten:
 
-- Den MySQL-Serverprozess reloaden bzw neu-starten:
+		# /etc/init.d/mysql reload
 
-# /etc/init.d/mysql reload
+		---
 
----
+		Wenn sich um eine INNODB-Tabelle handelt:
 
-Wenn sich um eine INNODB-Tabelle handelt:
+		- Die ursprünglichen CREATE-Befehle neu generieren lassen:
 
-- Die ursprŸngliche CREATE-Befehle neu generieren lassen:
+		# mysqlfrm --diagnostic myTable.frm > myTable.sql
 
-# mysqlfrm --diagnostic myTable.frm > myTable.sql
+		- Das Row-Format der wiederherzustellenden-Tabelle ermitteln und gg.falls den CREATE-Befehl anpassen, z.B.
 
-- Das Row-Format der wiederherzustellenden-Tabelle ermitteln und gg.falls den CREATE-Befehl anpassen, z.B.
+		CREATE TABLE my_restore.myTable ... ENGINE=Innodb ROW_FORMAT=Compact
 
-CREATE TABLE my_restore.myTable ... ENGINE=Innodb ROW_FORMAT=Compact
+		- Mit MySQL-Server verbinden und das sql-File sourcen und danach die implizit erzeugte ibd-Datei discarden:
 
-- Mit MySQL-Server verbinden und das sql-File sourcen und danach die implizit erzeugte ibd-Datei discarden:
+		mysql> SOURCE myTable.sql;
+		mysql> ALTER TABLE myTable DISCARD TABLESPACE;
 
-mysql> SOURCE myTable.sql;
-mysql> ALTER TABLE myTable DISCARD TABLESPACE;
+		- Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausfŸhren:
 
-- Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausfŸhren:
+		# cp myTable.ibd /var/lib/mysql/my_restore
+		# chown -R mysql:mysql /var/lib/mysql/my_restore
 
-# cp myTable.ibd /var/lib/mysql/my_restore
-# chown -R mysql:mysql /var/lib/mysql/my_restore
+		mysql> ALTER TABLE myTable IMPORT TABLESPACE;
 
-mysql> ALTER TABLE myTable IMPORT TABLESPACE;
+		- Importierte Daten begutachten:
 
-- Importierte Daten begutachten:
-
-mysql> SELECT * FROM myTable;
-
+		mysql> SELECT * FROM myTable;
 		
 Jquery: 
 	- Attribut-basierte Selektionen:
