@@ -24,6 +24,10 @@ zfs destroy -r oldzroot@movedata
 # IMPORTANT: This is needed so that zfsloader finds the right bootfs, otherwise it will will complain about missing "loader.lua"
 zpool set bootfs=zroot/ROOT/default zroot 
 ```
+# ZFS Snapshots
+
+zfs snapshot -r zroot@mysnapshot
+zfs list -t snapshot
 
 ---
 
