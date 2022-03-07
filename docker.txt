@@ -1,48 +1,47 @@
-- Images anzeigen
-
+# Images anzeigen
 docker images
 
-- Container anzeigen
-
+# Container anzeigen
 docker container ls
 
-- Programm im laufenden Container starten (z.B. bash im Container shopware-latest)
+# Container mit spezifischen Namen starten
+docker container run --name alpia -it alpine:3.15.0 /bin/sh
 
+# Container starten und dann Programm ausführen
+docker container start alpia
+docker container exec -it alpia /bin/sh
+
+# Kopieren in den Container
+docker cp Downloads/linux_phat_client.tgz  alpia:/root/linux.tgz
+
+# Programm im laufenden Container starten (z.B. bash im Container shopware-latest)
 docker exec -it shopware-latest bash 
 
-- Volume löschen
-
+# Volume löschen
 docker volume rm vol-xy
 
-- Docker-Compose ausführen
-
+# Docker-Compose ausführen
 docker compose up 
 
-- Docker-Compose ausführen und eingebundene Dockerfiles re-builden
-
+# Docker-Compose ausführen und eingebundene Dockerfiles re-builden
 docker compose up 
 
-- Existierende Volumes verwenden und Port-Mappings manuell spezifizieren
-
+# Existierende Volumes verwenden und Port-Mappings manuell spezifizieren
 docker run -p 80:80 -p 3306:3306 -p 2222:22 -p 8888:8888 -p 9999:9999 -d --name shopware --mount source=dockware_db_volume-sw,target=/var/lib/mysql --mount source=dockware_shop_volume-sw,target=/var/www/html dockware/dev:latest [/entrypoint.sh]
 
-- Container-Anpasungen ins Image schreiben
-
+# Container-Anpasungen ins Image schreiben
 docker commit shopware dockware/dev:latest
 
-- Child-Image mit allen Parent-Images zusammenfassen (History bleibt)
-
+# Child-Image mit allen Parent-Images zusammenfassen (History bleibt)
 docker save dockware/dev:child > child.tar
 #docker rmi dockware/dev:child 
 #docker image prune
 docker load < child.tar
 
-- Image umbenennen
-
+# Image umbenennen
 docker tag <old_name> <new_name>
 docker rmi <old_name>
 
-- Child-Image mit allen Parent-Images mittels existierenden Container zusammenfassen (History geht verloren)
-
+# Child-Image mit allen Parent-Images mittels existierenden Container zusammenfassen (History geht verloren)
 docker export --output shopware.tar shopware
 docker import --change "ENTRYPOINT /entrypoint.sh" shopware.tar dockware:heiko   
