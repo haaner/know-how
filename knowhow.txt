@@ -202,6 +202,16 @@ Ubuntu:
 
    Nur Security-Updates einspielen:
       apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install
+
+VIMdiff:
+
+	]c :	next difference
+	[c :	previous difference
+	do 		diff obtain
+	dp		diff put
+	zo 		open folded text
+	zc 		close folded text
+	Ctrl-W W toggle between diff columns
 		
 Xen:
 
