@@ -15,5 +15,26 @@ LVM:
 
 		Sobald der Data%-Wert auf 0 heruntergezählt hat, ist der Snapshot gemerged.
 	
+	- LV klonen
+	
+		$ lvconvert --type mirror --alloc anywhere -m1 /dev/rootvg/test
+		$ lvs -a -o +devices | egrep "LV|test"
+		
+			LV              VG     Attr       LSize .. ove Log       Cpy%Sync Convert Devices                          
+			test            rootvg mwi-aom--- 1.00g      [test_mlog] 100.00           test_mimage_0(0),test_mimage_1(0)
+			[test_mimage_0] rootvg iwi-aom--- 1.00g                                   /dev/sda5(87200)                 
+			[test_mimage_1] rootvg iwi-aom--- 1.00g                                   /dev/sda5(36009)                 
+			[test_mlog]     rootvg lwa-aom--- 4.00m                                   /dev/sda5(66575)                 
 
+		Check that Cpy%Sync is 100% finished; both copies are in sync then. Now let's break the mirror !
+
+		$ lvconvert --splitmirrors 1 --name testCopy /dev/rootvg/test
+  		$ mount /dev/rootvg/testCopy /mnt/test_copy
+	
+	- LV Binärkopie erstellen
+		
+		$ lvcreate --snapshot --name <the-name-of-the-snapshot> --size <size> /dev/volume-group/logical-volume
+		$ lvcreate --name <logical-volume-name> --size <size> the-new-volume-group-name
+		$ dd if=/dev/volume-group/snapshot-name of=/dev/new-volume-group/new-logical-volume
+		
 # vim: ts=4:sw=4
