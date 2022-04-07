@@ -127,3 +127,5 @@
 	  vertical-align: middle;
 	  width: 300px;
 	}
+
+# vim: ts=4:sw=4

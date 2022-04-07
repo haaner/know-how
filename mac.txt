@@ -69,3 +69,5 @@ content:
   "$\UF746" = "paste:";
   "^\UF746" = "copy:";
 }
+
+# vim: ts=4:sw=4

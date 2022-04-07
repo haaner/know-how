@@ -109,7 +109,8 @@ MySQL:
 		mysql> SOURCE myTable.sql;
 		mysql> ALTER TABLE myTable DISCARD TABLESPACE;
 
-		- Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausfŸhren:
+		- Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis
+		  "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausführen:
 
 		# cp myTable.ibd /var/lib/mysql/my_restore
 		# chown -R mysql:mysql /var/lib/mysql/my_restore
@@ -214,3 +215,4 @@ Windows:
 		
 		Get-AppxPackage *windowsstore* | Remove-AppxPackage
 		
+# vim: ts=4:sw=4

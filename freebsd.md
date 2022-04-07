@@ -33,3 +33,5 @@ zfs list -t snapshot
 
 https://wiki.freebsd.org/RootOnZFS/GPTZFSBoot
 https://forums.freebsd.org/threads/booting-freebsd-via-grub.60422/
+
+# vim: ts=4:sw=4

@@ -154,3 +154,5 @@
 
 	git fsck --full --no-reflogs --unreachable --lost-found | grep commit | cut -d  -f3 | xargs -n 1 git log -n 1 --pretty=oneline > lost-found.txt
 	# lost-found.txt durchforsten	
+
+# vim: ts=4:sw=4
