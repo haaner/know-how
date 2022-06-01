@@ -202,15 +202,22 @@ Ubuntu:
 
    Nur Security-Updates einspielen:
       apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install
+ 		
+UNIX-Terminal:
 
+	- Anzahl der maximal anzeigbaren Spalten anpassen
+		
+		$ stty -a | grep columns
+		$ stty columns 120
+	  
 VIMdiff:
 
 	$ vimdiff /etc/orig /etc/new
 	
 	]c :	next difference
 	[c :	previous difference
-	do 		Original behalten (obtain)
-	dp		Neuheit übernehmen (put)
+	do 		Gg.überliegende Seite übernehemn (obtain)
+	dp 		Momentane Seite behalten (put)
 	zo 		open folded text
 	zc 		close folded text
 	Ctrl-W W toggle between diff columns
