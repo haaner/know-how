@@ -1,3 +1,10 @@
+Services:
+
+	systemctl list-unit-files | grep enabled
+	systemctl enable php7.4-fpm-eibe
+
+	service apache2 restart
+
 LVM:
 
 	- Snapshot erstellen, wiederherstellen bzw. löschen:
