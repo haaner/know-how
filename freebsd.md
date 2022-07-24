@@ -29,6 +29,14 @@ zpool set bootfs=zroot/ROOT/default zroot
 zfs snapshot -r zroot@mysnapshot
 zfs list -t snapshot
 
+# Manuell installierte Pakete
+
+pkg prime-list
+
+# pkg Aliase
+
+pkg alias
+
 ---
 
 https://wiki.freebsd.org/RootOnZFS/GPTZFSBoot
