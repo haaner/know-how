@@ -5,6 +5,18 @@ Services:
 
 	service apache2 restart
 
+MD:
+
+	- RAID1 anlegen
+	
+		$ mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sda3 /dev/sdc3
+		
+	- RAID löschen
+	
+		$ mdadm --stop /dev/md1 
+		$ mdadm --remove /dev/md1
+		$ mdadm --zero-superblock /dev/sdb1 /dev/sdd1 # wichtig sonst gibts evtl. Probleme beim Booting (mit grub)
+
 LVM:
 
 	- Snapshot erstellen, wiederherstellen bzw. löschen:
