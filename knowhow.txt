@@ -209,7 +209,7 @@ VIMdiff:
 	
 	]c :	next difference
 	[c :	previous difference
-	do 		Gg.überliegende Seite übernehemn (obtain)
+	do 		Gg.überliegende Seite übernehmen (obtain)
 	dp 		Momentane Seite behalten (put)
 	zo 		open folded text
 	zc 		close folded text
