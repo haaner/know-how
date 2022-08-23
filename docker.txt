@@ -29,14 +29,20 @@ docker ps -a --filter volume=ff6bf891801f0fd17d113a7098898f57f46cdf765b4e3575419
 # Docker-Compose ausführen und detachen
 docker compose up -d
 
-# Log-Files inspizieren (hilfreich, wenn zuvor detached wurde)
+# Log-Files fortlaufend inspizieren (hilfreich, wenn zuvor detached wurde)
 docker compose logs -f
+
+# Log-Files des Service-Containers "app" einmalig inspizieren 
+docker compose logs app 
 
 # Docker-Compose ausführen und eingebundene Dockerfiles re-builden
 docker compose up --build
 
-# Befehl in dem Container "app" ausführen, der per docker-compose gestartet wurde
+# Befehl in dem Service-Container "app" ausführen, der per docker-compose gestartet wurde
 docker compose exec app /bin/sh
+
+# Befehl als root-User in dem Service-Container "app" ausführen, der per docker-compose gestartet wurde
+docker compose exec -u 0 app /bin/sh
 
 # Existierende Volumes verwenden und Port-Mappings manuell spezifizieren
 docker run -p 80:80 -p 3306:3306 -p 2222:22 -p 8888:8888 -p 9999:9999 -d --name shopware --mount source=dockware_db_volume-sw,target=/var/lib/mysql --mount source=dockware_shop_volume-sw,target=/var/www/html dockware/dev:latest [/entrypoint.sh]
