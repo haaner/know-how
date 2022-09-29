@@ -56,4 +56,37 @@ LVM:
 		$ lvcreate --name <logical-volume-name> --size <size> the-new-volume-group-name
 		$ dd if=/dev/volume-group/snapshot-name of=/dev/new-volume-group/new-logical-volume
 		
+Debian: 
+
+	- Installierte Pakete der Größe nach sortieren auflisten
+		
+		$ dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n
+	
+	
+	- Installierte (Alt-)Kernel auflisten
+	
+		$ dpkg --list | grep -i -E --color 'linux-image|linux-kernel' | grep '^ii'
+		
+Ubuntu:
+	
+	- Separates Repository hinzufügen
+	
+		$ add-apt-repository ppa:rdiff-backup/rdiff-backup-backports
+		$ add-apt-repository ppa:ondrej/php	
+	
+	- Repository-Key hinzufügen
+	
+		$ apt-key adv --keyserver keyserver.ubuntu.com --recv 3B4FE6ACC0B21F32
+		$ apt-key export 3B4FE6ACC0B21F32 | gpg --dearmour -o key.gpg
+		$ apt-key del 3B4FE6ACC0B21F32
+		$ mv key.gpg /etc/apt/trusted.gpg.d
+				
+	- Nur Security-Updates einspielen
+	
+		$ apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install
+				
+	- Manuell installierte Pakete anzeiegn
+
+		$ apt-mark showmanual		
+				
 # vim: ts=4:sw=4

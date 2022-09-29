@@ -40,10 +40,19 @@ Grub:
 		
 MySQL:
 
-   - root-Passwort in Datei (.mylogin.cnf) speichern
+   - root-Passwort in Datei speichern und verwenden
+   	
+		$ cat < _END_ >> .my.cnf
 		
-		mysql_config_editor set --host=127.0.0.1 --user=root --password
-
+		[client]
+		user=root
+		password=MyPassword
+			
+		_END_
+	
+		$ chmod 600 .my.cnf
+		$ mysql --defaults-extra-file=~/.my.cnf
+		
 	- root-Passwort ändern
 
 		ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'yourpasswd';
@@ -190,11 +199,6 @@ SSL:
 www.staub-designlight.com -d staub-designlight.com  -d
 www.staub-designlight.de -d staub-designlight.de -d www.staub-designlight.fr
 -d staub-designlight.fr -d www.staub-dl.ch -d staub-dl.ch
-
-Ubuntu:
-
-   Nur Security-Updates einspielen:
-      apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install
  		
 UNIX-Terminal:
 
