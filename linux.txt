@@ -11,11 +11,24 @@ MD:
 	
 		$ mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sda3 /dev/sdc3
 		
+	- Platte aus RAID-Verbund entfernen
+	
+		$ mdadm --manage /dev/md0 --fail /dev/sda1
+		$ mdadm --manage /dev/md0 --remove /dev/sda1
+		
+	- Platte in RAID-Verbund aufnehmen
+	
+		$ mdadm --manage /dev/md0 --add /dev/sda1
+		
 	- RAID löschen
 	
 		$ mdadm --stop /dev/md1 
 		$ mdadm --remove /dev/md1
 		$ mdadm --zero-superblock /dev/sdb1 /dev/sdd1 # wichtig sonst gibts evtl. Probleme beim Booting (mit grub)
+		
+	- RAID wieder starten (um zuvor gestoppte Verbünde wieder zu starten)
+	
+		$ mdadm --assemble --scan
 
 LVM:
 
@@ -61,8 +74,7 @@ Debian:
 	- Installierte Pakete der Größe nach sortieren auflisten
 		
 		$ dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n
-	
-	
+		
 	- Installierte (Alt-)Kernel auflisten
 	
 		$ dpkg --list | grep -i -E --color 'linux-image|linux-kernel' | grep '^ii'
