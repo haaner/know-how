@@ -1,9 +1,19 @@
+LFTP:
+
+	- Remote Verzeichnis komplett downloaden
+	
+		lftp> mirror . 
+		
+	- Lokales Verzeichnis hochladen und GIT-Ordner weglassen
+		
+		lftp> mirror -R . --exclude .git/
+
 Services:
 
-	systemctl list-unit-files | grep enabled
-	systemctl enable php7.4-fpm-eibe
+	$ systemctl list-unit-files | grep enabled
+	$ systemctl enable php7.4-fpm-eibe
 
-	service apache2 restart
+	$ service apache2 restart
 
 MD:
 
@@ -97,7 +107,7 @@ Ubuntu:
 	
 		$ apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install
 				
-	- Manuell installierte Pakete anzeiegn
+	- Manuell installierte Pakete anzeigen
 
 		$ apt-mark showmanual		
 				
