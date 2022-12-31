@@ -183,7 +183,10 @@ SVN:
 		svn add --depth=empty <dir>
 
 SSL:
-		
+	RSA Private/Public-Key erzeugen:
+		openssl genrsa -out privkey.pem 2048
+		openssl rsa -pubout -in privkey.pem -out pubkey.pem
+
 	Zertifikate ausgeben:
 		openssl s_client -connect mail.intercorp.de:465
 		openssl s_client -connect mail.intercorp.de:25 -starttls smtp
@@ -241,7 +244,6 @@ VIMdiff:
 VIM:
 
 	- Beim Pasting keine Text-Formatierung durchführen
-		
 		:set paste
 	
 Xen:
