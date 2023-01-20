@@ -193,13 +193,13 @@ SSL:
 		openssl s_client -connect mail.intercorp.de:587 -starttls smtp
 
 	Ablaufdatum des Zertifikats ausgeben:
-		echo 'quit' | openssl s_client -connect staging.shop.eibe.de:443 | openssl x509 -dates -noout
+		echo "" | openssl s_client -servername staub-designlight.ch -connect shopware.intercorp.de:443 | openssl x509 -dates -noout
 
 	Zertifikate konvertieren: (siehe auch https://www.hasslinger.com/index.php/en/blog/ssl-zertifikate-mit-openssl-konvertieren)
 		openssl x509 -inform der -in lffepsprd1-rz-sued-bayern-de.crt -out certificate.pem
 		openssl pkcs7 -print_certs -in certificate.p7b -out certificate.pem
 		
-	Generieren eines neuen privaten Schlüssel und eine neue Zertifikatsignierungsanforderung
+	Generieren eines neuen privaten SchlŸssel und eine neue Zertifikatsignierungsanforderung
 		openssl req -out CSR.csr -new -newkey rsa: 2048 -nodes -keyout privateKey.key
 
 	Generieren eines selbstsigniertes Zertifikat
