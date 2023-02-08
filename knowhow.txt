@@ -38,6 +38,22 @@ Grub:
 		1511  pstree
 		1512  reboot
 		
+LFTP:
+		
+	- Remote Verzeichnis komplett downloaden
+	
+		lftp> mirror . 
+		
+	- Lokales Verzeichnis hochladen und GIT-Ordner weglassen
+		
+		lftp> mirror -R . --exclude .git/
+
+	- Verbindung via SFTP
+	
+		lftp sftp://user@host
+		
+		(Bei Fehlermledung wg. 'Host key verification' zuvor kurz mit SSH verbinden)			
+		
 MySQL:
 
    - root-Passwort in Datei speichern und verwenden
@@ -221,6 +237,10 @@ SSL:
 www.staub-designlight.com -d staub-designlight.com  -d
 www.staub-designlight.de -d staub-designlight.de -d www.staub-designlight.fr
 -d staub-designlight.fr -d www.staub-dl.ch -d staub-dl.ch	
+
+HTTPS auf HTTP umsetzen:
+	
+	$ socat OPENSSL-LISTEN:443,cert=cert.pem,key=key.pem,verify=0,fork,reuseaddr TCP4-CONNECT:localhost:80
 	
 UNIX-Terminal:
 

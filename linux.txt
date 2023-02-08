@@ -1,13 +1,3 @@
-LFTP:
-
-	- Remote Verzeichnis komplett downloaden
-	
-		lftp> mirror . 
-		
-	- Lokales Verzeichnis hochladen und GIT-Ordner weglassen
-		
-		lftp> mirror -R . --exclude .git/
-
 Services:
 
 	$ systemctl list-unit-files | grep enabled
@@ -46,6 +36,7 @@ LVM:
 	
 		$ lvcreate  -L360G -s -n 150-disk-snap /dev/ubuntu-vg/server150-disk
 		$ lvconvert --merge /dev/ubuntu-vg/150-disk-snap
+		$ lvs -a # zeigt an wie lange die endgültige Wiederherstellung noch dauert
 		$ lvremove /dev/ubuntu-vg/150-disk-snap
 
 	- Falls eine Snapshot-Wiederherstellung fehlschlägt:
