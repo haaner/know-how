@@ -70,4 +70,16 @@ content:
   "^\UF746" = "copy:";
 }
 
+- Hartnäckige Dateien entfernen:
+
+1. command-r boot to recovery
+2. csrutil disable in Terminal to disable SIP
+3. reboot to command-r recovery again
+4. in Terminal cd /Volumes/Macintosh\ HD (or whatever your normal boot drive is named)
+5. rm -rf /com.apple.TimeMachine.localsnapshots
+6. csrutil enable in Terminal to enable SIP
+7. reboot
+
+[ SIP: https://support.apple.com/en-us/HT204899 ]
+
 # vim: ts=4:sw=4
