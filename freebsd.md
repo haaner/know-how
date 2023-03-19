@@ -29,6 +29,9 @@ zpool set bootfs=zroot/ROOT/default zroot
 zfs snapshot -r zroot@mysnapshot
 zfs list -t snapshot
 
+zfs rollback -r zroot@mysnapshot # für jeden zfs mount manuell ausführen
+zfs destroy -r zroot@mysnapshot
+
 # Manuell installierte Pakete
 
 pkg prime-list
