@@ -64,4 +64,7 @@ docker rmi <old_name>
 docker export --output shopware.tar shopware
 docker import --change "ENTRYPOINT /entrypoint.sh" shopware.tar dockware:heiko   
 
+# Aufräumen 
+docker system prune
+
 # vim: ts=4:sw=4
