@@ -202,7 +202,10 @@ SSL:
 	RSA Private/Public-Key erzeugen:
 		openssl genrsa -out privkey.pem 2048
 		openssl rsa -pubout -in privkey.pem -out pubkey.pem
-
+	
+	Entfernen der Passphrase aus einem privaten Schlüssel
+		openssl rsa -in privateKey.pem -out newPrivateKey.pem
+	
 	Zertifikate ausgeben:
 		openssl s_client -connect mail.intercorp.de:465
 		openssl s_client -connect mail.intercorp.de:25 -starttls smtp
@@ -215,20 +218,17 @@ SSL:
 		openssl x509 -inform der -in lffepsprd1-rz-sued-bayern-de.crt -out certificate.pem
 		openssl pkcs7 -print_certs -in certificate.p7b -out certificate.pem
 		
-	Generieren eines neuen privaten SchlŸssel und eine neue Zertifikatsignierungsanforderung
-		openssl req -out CSR.csr -new -newkey rsa: 2048 -nodes -keyout privateKey.key
-
-	Generieren eines selbstsigniertes Zertifikat
+	Generieren eines selbstsigniertes Zertifikats
 		openssl req -x509 -sha256 -nodes -days 365 -newkey rsa: 2048 -keyout privateKey.key -out certificate.crt
-
+	
+	Generieren eines neuen privaten Schlüssels und eine neue Zertifikatsignierungsanforderung
+		openssl req -out CSR.csr -new -newkey rsa: 2048 -nodes -keyout privateKey.key
+		
 	Generieren einer Zertifikatsignierungsanforderung (Certificate Signing Request, CSR) für einen vorhandenen privaten Schlüssel
 		openssl req -out CSR.csr -key privateKey.key -new
 
 	Generieren einer Zertifikatsignierungsanforderung basierend auf einem vorhandenen Zertifikat
 		openssl x509 -x509toreq -in certificate.crt -out CSR.csr -signkey privateKey.key
-
-	Entfernen der Passphrase aus einem privaten Schlüssel
-		openssl rsa -in privateKey.pem -out newPrivateKey.pem
 		
 	LetsEncrypt-Zertifikat ausstellen:
 		 letsencrypt certonly --webroot -w
