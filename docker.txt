@@ -67,4 +67,10 @@ docker import --change "ENTRYPOINT /entrypoint.sh" shopware.tar dockware:heiko
 # Aufräumen 
 docker system prune
 
+# Docker Repo-Verzeichnis umziehen (Windows) - siehe: https://dev.to/kim-ch/move-docker-desktop-data-distro-out-of-system-drive-4cg2
+wsl --shutdown
+wsl --export docker-desktop-data docker-desktop-data.tar
+wsl --unregister docker-desktop-data
+wsl --import docker-desktop-data D:\docker-new-repo\ docker-desktop-data.tar --version 2
+
 # vim: ts=4:sw=4
