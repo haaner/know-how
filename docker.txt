@@ -26,6 +26,9 @@ docker volume rm vol-xy
 # Welcher Container nutzt ein anonymes Volume
 docker ps -a --filter volume=ff6bf891801f0fd17d113a7098898f57f46cdf765b4e3575419802abb351503b
 
+# Container und sämtliche Volume- (und Bind-)Zuordnungen auflisten
+docker ps -a --format '{{ .ID }}' | xargs -I {} docker inspect -f '{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' {}
+
 # Docker-Compose ausführen und detachen
 docker compose up -d
 

@@ -1,3 +1,13 @@
+- Autor des letzten Commits anpassen:
+
+	git commit --amend --author="John Doe <john@doe.org>" --no-edit
+
+- Autor des ersten Commits anpassen
+
+	git rebase -i --root # Nun den ersten Commit als "edit" kennzeichen 
+	git commit --amend --author="John Doe <john@doe.org>" --no-edit
+	git rebase --continue
+
 - Remove file from version control but keep it locally:
 
 	git rm --cached <file>
