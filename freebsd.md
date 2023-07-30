@@ -40,6 +40,21 @@ pkg prime-list
 
 pkg alias
 
+# WLAN
+
+ifocnfig wlan0 create wlandev iwm0
+ifconfig wlan0 scan
+ifconfig wlan0 ssid "BirdWorX" # geht nur, wenn kein PW für Verbindung notwendig ist
+
+cat < _EOF_ >> /etc/wpa_supplicant.conf
+network={ 
+    ssid="BirdWorX"
+    psk="SecretPW"
+    scan_ssid=1
+}
+_EOF_
+
+wpa_supplicant -i wlan0 -c /etc/wpa_supplicant.conf
 ---
 
 https://wiki.freebsd.org/RootOnZFS/GPTZFSBoot
