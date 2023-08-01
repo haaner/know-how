@@ -3,6 +3,11 @@ Disk:
 	- Block-Devices inklusive Größen und RAID-Gruppierung auflisten
 		
 		$ lsblk
+		
+	- UUIDs auflisten
+	
+		$ lsblk -lf
+		
 MD:
 
 	- RAID1 anlegen
@@ -26,7 +31,23 @@ MD:
 		
 	- RAID wieder starten (um zuvor gestoppte Verbünde wieder zu starten)
 	
-		$ mdadm --assemble --scan
+		$ mdadm --assemble --scan	
+		
+	- Platte aus Verbund nehmen und durch neue Platte ersetzen
+		
+		$ mdadm --manage /dev/md0 --fail /dev/sda1
+		$ mdadm --manage /dev/md1 --fail /dev/sda2
+		$ mdadm /dev/md0 -r /dev/sda1
+		$ mdadm /dev/md1 -r /dev/sda2
+		$ grub-install /dev/sdb
+	
+		$ halt
+		
+		$ sfdisk -d /dev/sdb | sfdisk /dev/sda
+		$ mdadm /dev/md0 -a /dev/sda1
+		$ mdadm /dev/md1 -a /dev/sda2
+		$ grub-mkdevicemap -n
+		$ grub-install /dev/sda
 
 LVM:
 
