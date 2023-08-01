@@ -1,10 +1,8 @@
-Services:
+Disk: 
 
-	$ systemctl list-unit-files | grep enabled
-	$ systemctl enable php7.4-fpm-eibe
-
-	$ service apache2 restart
-
+	- Block-Devices inklusive Größen und RAID-Gruppierung auflisten
+		
+		$ lsblk
 MD:
 
 	- RAID1 anlegen
@@ -70,7 +68,7 @@ LVM:
 		$ lvcreate --name <logical-volume-name> --size <size> the-new-volume-group-name
 		$ dd if=/dev/volume-group/snapshot-name of=/dev/new-volume-group/new-logical-volume
 		
-Debian: 
+Debian / Ubuntu: 
 
 	- Installierte Pakete der Größe nach sortieren auflisten
 		
@@ -80,8 +78,6 @@ Debian:
 	
 		$ dpkg --list | grep -i -E --color 'linux-image|linux-kernel' | grep '^ii'
 		
-Ubuntu:
-	
 	- Separates Repository hinzufügen
 	
 		$ add-apt-repository ppa:rdiff-backup/rdiff-backup-backports
@@ -101,5 +97,13 @@ Ubuntu:
 	- Manuell installierte Pakete anzeigen
 
 		$ apt-mark showmanual		
+
+Services:
+
+	$ systemctl list-unit-files | grep enabled
+	$ systemctl enable php7.4-fpm-eibe
+
+	$ service apache2 restart
+
 				
 # vim: ts=4:sw=4
