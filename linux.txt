@@ -114,6 +114,11 @@ Debian / Ubuntu:
 	- Nur Security-Updates einspielen
 	
 		$ apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install
+
+	- Zurückgehaltene Pakete einspielen
+
+		$ apt dist-upgrade # falls dies nicht hilft:
+		$ apt install --only-upgrade failing-package
 				
 	- Manuell installierte Pakete anzeigen
 
