@@ -21,7 +21,11 @@ GDB:
 
 	- Via --args können Kommandozeilen-Parameter an gdb übergeben werden
 
-		gdb --args ./test -p1 --param=2 
+		gdb ./test --args  -p1 --param=2 
+
+	- Executable einlesen
+
+		file ./test
 
 	- FAIL-Funktion aus error.cpp auflisten
 
@@ -33,7 +37,27 @@ GDB:
 	
 	- Breakpoint auf Zeile 12 setzen
 
-		break 12
+		b 12
+
+	- Breapoints listen
+
+		i b
+
+	- Breakpoint disablen / enablen / löschen
+
+		dis 1 / en 1 / d 1
+
+ 	- Starten / Fortsetzen / Steppen / Nächste
+		
+		r / c / s / n
+
+	- Funktion beenden
+
+		fin 
+
+	- Stack hoch / runter
+
+		up / down
 		
 Grub:
 
