@@ -38,14 +38,27 @@ GDB:
 	- Breakpoint auf Zeile 12 setzen
 
 		b 12
+		b 12 if stats.iters <= 25
 
 	- Breapoints listen
 
 		i b
 
+	- Nachträglich Bedingung für BP ergänzen
+
+		cond 1 i == 99
+
 	- Breakpoint disablen / enablen / löschen
 
 		dis 1 / en 1 / d 1
+
+	- Watchpoint setzen
+	
+		watch stats.iters
+
+	- Variable bei jedem Stop anzeigen
+		
+		display stats.iters
 
  	- Starten / Fortsetzen / Steppen / Nächste
 		
