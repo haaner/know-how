@@ -71,6 +71,10 @@ GDB:
 	- Stack hoch / runter
 
 		up / down
+
+	- Funktion aufrufen (evtl. vorher: set overload-resolution off=
+		
+		p member_function()
 		
 Grub:
 
