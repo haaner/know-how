@@ -21,15 +21,19 @@ GDB:
 
 	- Via --args können Kommandozeilen-Parameter an gdb übergeben werden
 
-		gdb ./test --args  -p1 --param=2 
+		gdb ./test --args -p1 --param=2 
 
 	- Executable einlesen
 
 		file ./test
 
+	- Sourcen "refreshen"
+
+		directoy
+
 	- FAIL-Funktion aus error.cpp auflisten
 
-		 list error.cpp:FAIL 
+		list error.cpp:FAIL 
 
 	- Zeile 10 aus error.cpp auflisten
 		
