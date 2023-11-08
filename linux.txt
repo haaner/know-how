@@ -124,6 +124,16 @@ Debian / Ubuntu:
 
 		$ apt-mark showmanual		
 
+	- Paket-Selektion erstellen
+
+		$ dpkg --get-selections > packages.lst
+	
+	- Paket-Selektion einspielen
+
+		$ apt-cache dumpavail | dpkg --merge-avail
+		$ dpkg --set-selections < packages.lst
+		$ apt install dselect ; apt dselect-upgrade
+
 Services:
 
 	$ systemctl list-unit-files | grep enabled
