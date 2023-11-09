@@ -230,6 +230,12 @@ PDF:
 	
 		gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -o output.pdf PhpStorm/accedo/backend/pdf/crest_Vorlage_Provisionsavis.pdf		
 		
+Rsync:
+		
+	- Server kopieren
+	
+		rsync -avz --exclude '/proc' --exclude '/sys' --exclude '/dev' --exclude '/boot' --exclude '/etc/fstab' --exclude '/etc/network' --exclude '/etc/netplan' / 88.99.12.250:/
+		
 Screen:
 		Ctrl+a S - Split screen	(horizontally)
 		Ctrl+a | - Split screen (vertically)

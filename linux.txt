@@ -89,6 +89,15 @@ LVM:
 		$ lvcreate --name <logical-volume-name> --size <size> the-new-volume-group-name
 		$ dd if=/dev/volume-group/snapshot-name of=/dev/new-volume-group/new-logical-volume
 		
+UFW:
+	- Regeln auflisten
+
+		$ ufw status numbered
+		
+	- Ports freigeben
+		
+		$ ufw allow proto tcp from 88.99.12.250 to any port 22,5666 comment "Hetzner Nagios(neu)"
+		
 Debian / Ubuntu: 
 
 	- Installierte Pakete der Größe nach sortieren auflisten
@@ -96,7 +105,7 @@ Debian / Ubuntu:
 		$ dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n
 		
 	- Installierte (Alt-)Kernel auflisten
-	
+	 
 		$ dpkg --list | grep -i -E --color 'linux-image|linux-kernel' | grep '^ii'
 		
 	- Separates Repository hinzufügen
@@ -136,7 +145,7 @@ Debian / Ubuntu:
 
 Services:
 
-	$ systemctl list-unit-files | grep enabled
+	$ systemctl list-unit-files | grep enabled | sort
 	$ systemctl enable php7.4-fpm-eibe
 
 	$ service apache2 restart
