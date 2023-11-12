@@ -42,7 +42,7 @@ pkg alias
 
 # WLAN
 
-ifocnfig wlan0 create wlandev iwm0
+ifconfig wlan0 create wlandev iwm0
 ifconfig wlan0 scan
 ifconfig wlan0 ssid "BirdWorX" # geht nur, wenn kein PW für Verbindung notwendig ist
 
@@ -55,6 +55,22 @@ network={
 _EOF_
 
 wpa_supplicant -i wlan0 -c /etc/wpa_supplicant.conf
+
+
+# Update
+
+$ freebsd-update fetch
+$ freebsd-update install
+
+# Upgrade 
+
+$ freebsd-update -r 13.2-RELEASE upgrade
+$ freebsd-update install
+$ shutdown -r now
+$ freebsd-update install
+$ pkg-static upgrade -f
+
+
 ---
 
 https://wiki.freebsd.org/RootOnZFS/GPTZFSBoot
