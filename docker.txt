@@ -23,6 +23,9 @@ docker exec -it shopware-latest bash
 # Volume löschen
 docker volume rm vol-xy
 
+# Alle anonymen Volumes löschen
+docker volume ls --format "{{.Name}}" | while read LINE; do [ "64" == "${#LINE}" ] && docker volume rm "$LINE" ; done
+
 # Welcher Container nutzt ein anonymes Volume
 docker ps -a --filter volume=ff6bf891801f0fd17d113a7098898f57f46cdf765b4e3575419802abb351503b
 
