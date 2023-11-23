@@ -76,7 +76,7 @@ GDB:
 
 		up / down
 
-	- Funktion aufrufen (evtl. vorher: set overload-resolution off=
+	- Funktion aufrufen (evtl. vorher: set overload-resolution off)
 		
 		p member_function()
 		
