@@ -1,86 +1,92 @@
-Apache:
+## Apache
 
-	- mod_rewrite: (Using variables on the right side of RewriteCond by back-reference: \1)
+- mod_rewrite: (Using variables on the right side of RewriteCond by back-reference: \1)
+
+	```
+	RewriteCond %{DOCUMENT_ROOT},%{REQUEST_FILENAME} ^([^,]*+),\1/*+(.*?/)/*+([^/]*)$ 
+	RewriteRule ^ - [E=CURPATH:%2,E=CURNAME:%3]
+	```
+
+	[ http://www.ckollars.org/apache-rewrite-htaccess.html#precedence ]
+		
+## Composer:
+
+- ext-gmp ignorieren (erst ab Composer 2 mï¿½glich)
 	
-		RewriteCond %{DOCUMENT_ROOT},%{REQUEST_FILENAME} ^([^,]*+),\1/*+(.*?/)/*+([^/]*)$ 
-		RewriteRule ^ - [E=CURPATH:%2,E=CURNAME:%3]
-
-		[ http://www.ckollars.org/apache-rewrite-htaccess.html#precedence ]
+	```$ php bin/composer.phar install --ignore-platform-req=ext-gmp```
 		
-Composer:
+- Content-Hash im composer.lock korrigieren: 
+		
+	```$ composer update --lock```
 
-	- ext-gmp ignorieren (erst ab Composer 2 möglich)
+## [FreeBSD](freebsd.md)		
+
+## GDB:
+
+Via `--args` kÃ¶nnen Kommandozeilen-Parameter an gdb Ã¼bergeben werden
+
+```
+	$ gdb ./test --args -p1 --param=2 
+```
+
+- Executable einlesen
+
+	```file ./test```
+
+- Sourcen "refreshen"
+
+	```directory```
+
+- FAIL-Funktion aus error.cpp auflisten
+
+	```list error.cpp:FAIL```
+
+- Zeile 10 aus error.cpp auflisten
+		
+	```list error.cpp:10```
 	
-		php bin/composer.phar install --ignore-platform-req=ext-gmp
+- Breakpoint auf Zeile 12 setzen
+
+	```b 12```  
+	```b 12 if stats.iters <= 25```
 		
-	- Content-Hash im composer.lock korrigieren: 
-		
-		composer update --lock  
+- Breapoints listen
 
-GDB:
+	```i b```
 
-	- Via --args können Kommandozeilen-Parameter an gdb übergeben werden
+- NachtrÃ¤gliche Bedingung fÃ¼r BP ergÃ¤nzen
 
-		gdb ./test --args -p1 --param=2 
+	```cond 1 i == 99```
 
-	- Executable einlesen
+- Breakpoint disablen / enablen / lï¿½schen
 
-		file ./test
+	```dis 1 / en 1 / d 1```
 
-	- Sourcen "refreshen"
-
-		directoy
-
-	- FAIL-Funktion aus error.cpp auflisten
-
-		list error.cpp:FAIL 
-
-	- Zeile 10 aus error.cpp auflisten
-		
-		list error.cpp:10
+- Watchpoint setzen
 	
-	- Breakpoint auf Zeile 12 setzen
+	```watch stats.iters```
 
-		b 12
-		b 12 if stats.iters <= 25
-
-	- Breapoints listen
-
-		i b
-
-	- Nachträglich Bedingung für BP ergänzen
-
-		cond 1 i == 99
-
-	- Breakpoint disablen / enablen / löschen
-
-		dis 1 / en 1 / d 1
-
-	- Watchpoint setzen
-	
-		watch stats.iters
-
-	- Variable bei jedem Stop anzeigen
+- Variable bei jedem Stop anzeigen
 		
-		display stats.iters
+	```display stats.iters```
 
- 	- Starten / Fortsetzen / Steppen / Nächste
+- Starten / Fortsetzen / Steppen / Nï¿½chste
 		
-		r / c / s / n
+	```r / c / s / n```
 
-	- Funktion beenden
+- Funktion beenden
 
-		fin 
+	```fin```
 
-	- Stack hoch / runter
+- Stack hoch / runter
 
-		up / down
+	```up / down```
 
-	- Funktion aufrufen (evtl. vorher: set overload-resolution off)
+- Funktion aufrufen (evtl. vorher: set overload-resolution off)
 		
-		p member_function()
+	```p member_function()```
 		
-Grub:
+## Grub:
 
 	- Installation (bei RAIDs auf alle beteiligte Platten klatschen, die die boot-Partition enthalten) 
 	
@@ -103,7 +109,7 @@ Grub:
 			
 InfluxDB:
 
-   - Datenpunkte hinzufügen via API
+   - Datenpunkte hinzufï¿½gen via API
 
       for i in $(seq 1 100) ; do 
 	      curl -XPOST "http://localhost:8086/api/v2/write?org=intercorp&bucket=corpus" \
@@ -143,11 +149,11 @@ MySQL:
 		$ chmod 600 .my.cnf
 		$ mysql --defaults-extra-file=~/.my.cnf
 		
-	- root-Passwort ändern
+	- root-Passwort ï¿½ndern
 
 		ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'yourpasswd';
 
-	- Alle Tabellen und den zugehörigen LOCK-Status anzeigen:
+	- Alle Tabellen und den zugehï¿½rigen LOCK-Status anzeigen:
 	
 		SHOW OPEN TABLES
 
@@ -163,15 +169,15 @@ MySQL:
 
 		KILL <put_process_id_here>;
 		
-	- Keys für Abfrage ermitteln (für die Optimierung von Zugriffszeiten):
+	- Keys fï¿½r Abfrage ermitteln (fï¿½r die Optimierung von Zugriffszeiten):
 	
 		EXPLAIN SELECT SQL_NO_CACHE id, COUNT(*) FROM semmel.Person WHERE tmpName LIKE 'horst%' 
 		
-	- Summierung über gruppierten Sub-Select:
+	- Summierung ï¿½ber gruppierten Sub-Select:
 	
 		SELECT SUM(sub.totals) FROM (SELECT COUNT(*) AS totals FROM `MetaField` GROUP BY srcId) AS sub
 
-	- Tabellen / Daten aus Binärdateien wiederherstellen:
+	- Tabellen / Daten aus Binï¿½rdateien wiederherstellen:
 		
 		Wenn es sich um eine MyISAM-Tabelle handelt:
 
@@ -188,7 +194,7 @@ MySQL:
 
 		Wenn sich um eine INNODB-Tabelle handelt:
 
-		- Die ursprünglichen CREATE-Befehle neu generieren lassen:
+		- Die ursprï¿½nglichen CREATE-Befehle neu generieren lassen:
 
 		# mysqlfrm --diagnostic myTable.frm > myTable.sql
 
@@ -202,7 +208,7 @@ MySQL:
 		mysql> ALTER TABLE myTable DISCARD TABLESPACE;
 
 		- Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis
-		  "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausführen:
+		  "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausfï¿½hren:
 
 		# cp myTable.ibd /var/lib/mysql/my_restore
 		# chown -R mysql:mysql /var/lib/mysql/my_restore
@@ -221,12 +227,12 @@ Excel:
 	- Teilbereiche summieren:
 
 		=SUMMEWENN(A2:A10;"Bezahlt";B2:B10) 
-		=SUMME( -- die strg-taste gedrückt halten und alle zellen markieren, die addiert werden sollen - Klammer zu und RETURN drücken
+		=SUMME( -- die strg-taste gedrï¿½ckt halten und alle zellen markieren, die addiert werden sollen - Klammer zu und RETURN drï¿½cken
 		=SUMME(B1:B4;B6:B8) (Bereiche definieren)		
 		
 PDF:
 	
-	- Kompatibilitäts-Level anpassen:
+	- Kompatibilitï¿½ts-Level anpassen:
 	
 		gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -o output.pdf PhpStorm/accedo/backend/pdf/crest_Vorlage_Provisionsavis.pdf		
 		
@@ -283,7 +289,7 @@ SSL:
 		openssl genrsa -out privkey.pem 2048
 		openssl rsa -pubout -in privkey.pem -out pubkey.pem
 	
-	Entfernen der Passphrase aus einem privaten Schlüssel
+	Entfernen der Passphrase aus einem privaten Schlï¿½ssel
 		openssl rsa -in privateKey.pem -out newPrivateKey.pem
 	
 	Zertifikate ausgeben:
@@ -301,10 +307,10 @@ SSL:
 	Generieren eines selbstsigniertes Zertifikats
 		openssl req -x509 -sha256 -nodes -days 365 -newkey rsa: 2048 -keyout privateKey.key -out certificate.crt
 	
-	Generieren eines neuen privaten Schlüssels und eine neue Zertifikatsignierungsanforderung
+	Generieren eines neuen privaten Schlï¿½ssels und eine neue Zertifikatsignierungsanforderung
 		openssl req -out CSR.csr -new -newkey rsa: 2048 -nodes -keyout privateKey.key
 		
-	Generieren einer Zertifikatsignierungsanforderung (Certificate Signing Request, CSR) für einen vorhandenen privaten Schlüssel
+	Generieren einer Zertifikatsignierungsanforderung (Certificate Signing Request, CSR) fï¿½r einen vorhandenen privaten Schlï¿½ssel
 		openssl req -out CSR.csr -key privateKey.key -new
 
 	Generieren einer Zertifikatsignierungsanforderung basierend auf einem vorhandenen Zertifikat
@@ -335,7 +341,7 @@ VIMdiff:
 	
 	]c :	next difference
 	[c :	previous difference
-	do 		Gg.überliegende Seite übernehmen (obtain)
+	do 		Gg.ï¿½berliegende Seite ï¿½bernehmen (obtain)
 	dp 		Momentane Seite behalten (put)
 	zo 		open folded text
 	zc 		close folded text
@@ -343,7 +349,7 @@ VIMdiff:
 	
 VIM:
 
-	- Beim Pasting keine Text-Formatierung durchführen
+	- Beim Pasting keine Text-Formatierung durchfï¿½hren
 		:set paste
 	
 Xen:
