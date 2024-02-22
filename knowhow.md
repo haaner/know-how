@@ -62,6 +62,11 @@ Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 
 	```dis 1 / en 1 / d 1```
 
+- Breakpoints speichern und wieder einlesen
+
+	```save breakpoints file.txt```
+	```source file.txt```
+
 - Watchpoint setzen
 	
 	```watch stats.iters```
