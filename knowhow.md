@@ -1,4 +1,4 @@
-## Apache
+##Apache
 
 - mod_rewrite: (Using variables on the right side of RewriteCond by back-reference: \1)
 
@@ -26,7 +26,7 @@
 Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 
 ```
-	$ gdb ./test --args -p1 --param=2 
+	$ gdb --args ./test -p1 --param=2 
 ```
 
 - Executable einlesen
@@ -369,4 +369,4 @@ Windows:
 		
 		Get-AppxPackage *windowsstore* | Remove-AppxPackage
 
-# vim: ts=4:sw=4
+
