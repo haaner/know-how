@@ -131,7 +131,8 @@ Debian / Ubuntu:
 	- Zurückgehaltene Pakete einspielen
 
 		$ apt dist-upgrade # falls dies nicht hilft:
-		$ apt install --only-upgrade failing-package
+		$ apt install --only-upgrade failing-package # falls dies nicht hilft:
+		$ apt --with-new-pkgs upgrade failing-package
 				
 	- Manuell installierte Pakete anzeigen
 
