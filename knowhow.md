@@ -1,4 +1,4 @@
-##Apache
+## Apache 
 
 - mod_rewrite: (Using variables on the right side of RewriteCond by back-reference: \1)
 
@@ -6,10 +6,10 @@
 	RewriteCond %{DOCUMENT_ROOT},%{REQUEST_FILENAME} ^([^,]*+),\1/*+(.*?/)/*+([^/]*)$ 
 	RewriteRule ^ - [E=CURPATH:%2,E=CURNAME:%3]
 	```
-
+	
 	[ http://www.ckollars.org/apache-rewrite-htaccess.html#precedence ]
 		
-## Composer:
+## Composer
 
 - ext-gmp ignorieren (erst ab Composer 2 m�glich)
 	
@@ -87,58 +87,91 @@ Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 
 	```up / down```
 
+- Backtrace anzeigen / 3. Frame selektieren
+
+	```bt```
+	```frame 3```
+
+	```info frame```
+	```info args```
+	```info locals```
+
 - Funktion aufrufen (evtl. vorher: set overload-resolution off)
 		
 	```p member_function()```
 		
-## Grub:
+## Grub
 
-	- Installation (bei RAIDs auf alle beteiligte Platten klatschen, die die boot-Partition enthalten) 
-	
+- Installation (bei RAIDs auf alle beteiligte Platten klatschen, die die boot-Partition enthalten) 
+
+	```	
 		grub-install /dev/sda
 		grub-install /dev/sdb 
-		
-		Auszug aus History des internen Backup-Servers
-		
-		1502  cfdisk /dev/sdb
-		1503  mdadm --manage /dev/md0  --add /dev/sdb2
-		1504  mdadm --manage /dev/md1  --add /dev/sdb4
-		1505  mdadm --examine --scan
-		1506  vi /boot/grub/grub.cfg
-		1507  update-grub
-		1508  update-initramfs -u
-		1509  grub-install /dev/sda
-		1510  grub-install /dev/sdb
-		1511  pstree
-		1512  reboot
-			
-InfluxDB:
-
-   - Datenpunkte hinzuf�gen via API
-
-      for i in $(seq 1 100) ; do 
-	      curl -XPOST "http://localhost:8086/api/v2/write?org=intercorp&bucket=corpus" \
-		      --header "Authorization: Token t1kt0k" \
-   		   --data-raw "heiko,tag1=194,tag2=5755 field1=$RANDOM" 
-	      sleep 5
-      done
-
-LFTP:
-		
-	- Remote Verzeichnis komplett downloaden
+	```
 	
-		lftp> mirror . 
-		
-	- Lokales Verzeichnis hochladen und GIT-Ordner weglassen
-		
-		lftp> mirror -R . --exclude .git/
+	Auszug aus History des internen Backup-Servers
+	```	
+	1502  cfdisk /dev/sdb
+	1503  mdadm --manage /dev/md0  --add /dev/sdb2
+	1504  mdadm --manage /dev/md1  --add /dev/sdb4
+	1505  mdadm --examine --scan
+	1506  vi /boot/grub/grub.cfg
+	1507  update-grub
+	1508  update-initramfs -u
+	1509  grub-install /dev/sda
+	1510  grub-install /dev/sdb
+	1511  pstree
+	1512  reboot
+	```
 
-	- Verbindung via SFTP
+## InfluxDB
+
+   - Datenpunkte hinzufügen via API
+
+```
+	for i in $(seq 1 100) ; do 
+		curl -XPOST "http://localhost:8086/api/v2/write?org=intercorp&bucket=corpus" \
+			--header "Authorization: Token t1kt0k" \
+			--data-raw "heiko,tag1=194,tag2=5755 field1=$RANDOM" 
+		sleep 5
+	done
+```
+
+## LFTP
+		
+- Remote Verzeichnis komplett downloaden
+
+	```lftp> mirror .```		
+- Lokales Verzeichnis hochladen und GIT-Ordner weglassen
+
+	```lftp> mirror -R . --exclude .git/```
+
+- Verbindung via SFTP
 	
-		lftp sftp://user@host
+	```lftp sftp://user@host```
 		
-		(Bei Fehlermledung wg. 'Host key verification' zuvor kurz mit SSH verbinden)			
+	(Bei Fehlermledung wg. 'Host key verification' zuvor kurz mit SSH verbinden)			
 		
+## macOS
+
+### Home/End Key-Binding korrigieren
+
+```
+mkdir -p $HOME/Library/KeyBindings
+
+echo '{
+	/* Remap Home / End keys to be correct */
+	"\UF729" = "moveToBeginningOfLine:"; /* Home */
+	"\UF72B" = "moveToEndOfLine:"; /* End */
+	"$\UF729" = "moveToBeginningOfLineAndModifySelection:"; /* Shift + Home */
+	"$\UF72B" = "moveToEndOfLineAndModifySelection:"; /* Shift + End */
+	"^\UF729" = "moveToBeginningOfDocument:"; /* Ctrl + Home */
+	"^\UF72B" = "moveToEndOfDocument:"; /* Ctrl + End */
+	"$^\UF729" = "moveToBeginningOfDocumentAndModifySelection:"; /* Shift + Ctrl + Home */
+	"$^\UF72B" = "moveToEndOfDocumentAndModifySelection:"; /* Shift + Ctrl + End */
+}' > $HOME/Library/KeyBindings/DefaultKeyBinding.dict
+```
+
 MySQL:
 
    - root-Passwort in Datei speichern und verwenden
@@ -154,7 +187,7 @@ MySQL:
 		$ chmod 600 .my.cnf
 		$ mysql --defaults-extra-file=~/.my.cnf
 		
-	- root-Passwort �ndern
+	- root-Passwort ändern
 
 		ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'yourpasswd';
 
