@@ -390,6 +390,13 @@ VIM:
 	- Beim Pasting keine Text-Formatierung durchf�hren
 		:set paste
 	
+VirtualBox:
+
+	- HardDrive <-> VDI klonen
+
+	$ VBoxManage convertfromraw /dev/sda MyImage.vdi --format VDI
+	$ VBoxManage clonehd --format RAW file.vdi | dd of=/dev/sda
+	
 Xen:
 
 	xl list 
