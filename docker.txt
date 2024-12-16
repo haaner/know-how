@@ -47,6 +47,9 @@ docker compose up --build
 # Befehl in dem Service-Container "app" ausführen, der per docker-compose gestartet wurde
 docker compose exec app /bin/sh
 
+# Kopieren aus dem Container
+docker compose cp php:/srv/app/vendor .
+
 # Befehl als root-User in dem Service-Container "app" ausführen, der per docker-compose gestartet wurde
 docker compose exec -u 0 app /bin/sh
 
