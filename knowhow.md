@@ -1,106 +1,108 @@
-## Apache 
+# Apache 
 
-- mod_rewrite: (Using variables on the right side of RewriteCond by back-reference: \1)
+## mod_rewrite
 
-	```
+#### Using variables on the right side of RewriteCond by back-reference: \1
+
 	RewriteCond %{DOCUMENT_ROOT},%{REQUEST_FILENAME} ^([^,]*+),\1/*+(.*?/)/*+([^/]*)$ 
 	RewriteRule ^ - [E=CURPATH:%2,E=CURNAME:%3]
-	```
 	
-	[ http://www.ckollars.org/apache-rewrite-htaccess.html#precedence ]
+[ http://www.ckollars.org/apache-rewrite-htaccess.html#precedence ]
 		
-## Composer
+		
+# Composer
 
-- ext-gmp ignorieren (erst ab Composer 2 m�glich)
+#### ext-gmp ignorieren (erst ab Composer 2 möglich)
 	
-	```$ php bin/composer.phar install --ignore-platform-req=ext-gmp```
+	php bin/composer.phar install --ignore-platform-req=ext-gmp
 		
-- Content-Hash im composer.lock korrigieren: 
+#### Content-Hash in composer.lock korrigieren: 
 		
-	```$ composer update --lock```
+	composer update --lock
 
-## [FreeBSD](freebsd.md)		
 
-## GDB:
+# [FreeBSD](freebsd.md)		
+
+
+# GDB
 
 Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 
-```
-	$ gdb --args ./test -p1 --param=2 
-```
+	gdb --args ./test -p1 --param=2 
 
-- Executable einlesen
+#### Executable einlesen
 
-	```file ./test```
+	file ./test
 
-- Sourcen "refreshen"
+#### Sourcen "refreshen"
 
-	```directory```
+	directory
 
-- FAIL-Funktion aus error.cpp auflisten
+#### FAIL-Funktion aus error.cpp auflisten
 
-	```list error.cpp:FAIL```
+	list error.cpp:FAIL
 
-- Zeile 10 aus error.cpp auflisten
+#### Zeile 10 aus error.cpp auflisten
 		
-	```list error.cpp:10```
+	list error.cpp:10
 	
-- Breakpoint auf Zeile 12 setzen
+#### Breakpoint auf Zeile 12 setzen
 
-	```b 12```  
-	```b 12 if stats.iters <= 25```
+	b 12
+	b 12 if stats.iters <= 25
 		
-- Breapoints listen
+#### Breapoints listen
 
-	```i b```
+	i b
 
-- Nachträgliche Bedingung für BP ergänzen
+#### Nachträgliche Bedingung für BP ergänzen
 
-	```cond 1 i == 99```
+	cond 1 i == 99
 
-- Breakpoint disablen / enablen / l�schen
+#### Breakpoint disablen / enablen / löschen
 
-	```dis 1 / en 1 / d 1```
+	dis 1 / en 1 / d 1
 
-- Breakpoints speichern und wieder einlesen
+#### Breakpoints speichern und wieder einlesen
 
-	```save breakpoints file.txt```
-	```source file.txt```
+	save breakpoints file.txt
+	source file.txt
 
-- Watchpoint setzen
+#### Watchpoint setzen
 	
-	```watch stats.iters```
+	watch stats.iters
 
-- Variable bei jedem Stop anzeigen
+#### Variable bei jedem Stop anzeigen
 		
-	```display stats.iters```
+	display stats.iters
 
-- Starten / Fortsetzen / Steppen / N�chste
+#### Starten / Fortsetzen / Steppen / Nächste
 		
-	```r / c / s / n```
+	r / c / s / n
 
-- Funktion beenden
+#### Funktion beenden
 
-	```fin```
+	fin
 
-- Stack hoch / runter
+#### Stack hoch / runter
 
-	```up / down```
+	up / down
 
-- Backtrace anzeigen / 3. Frame selektieren
+#### Backtrace anzeigen / 3. Frame selektieren
 
-	```bt```
-	```frame 3```
+	bt
+	frame 3
 
-	```info frame```
-	```info args```
-	```info locals```
+	info frame
+	info args
+	info locals
 
-- Funktion aufrufen (evtl. vorher: set overload-resolution off)
+#### Funktion aufrufen (evtl. vorher: set overload-resolution off)
 		
-	```p member_function()```
+	p member_function()
+
 		
-## Grub
+# Grub
 
 - Installation (bei RAIDs auf alle beteiligte Platten klatschen, die die boot-Partition enthalten) 
 
@@ -268,12 +270,16 @@ Excel:
 		=SUMME( -- die strg-taste gedr�ckt halten und alle zellen markieren, die addiert werden sollen - Klammer zu und RETURN dr�cken
 		=SUMME(B1:B4;B6:B8) (Bereiche definieren)		
 		
-PDF:
+# PDF
 	
-	- Kompatibilit�ts-Level anpassen:
+#### Kompatibilitäts-Level anpassen
 	
-		gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -o output.pdf PhpStorm/accedo/backend/pdf/crest_Vorlage_Provisionsavis.pdf		
-		
+	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -o output.pdf input.pdf	
+
+#### Kompression entfernen
+
+	gs -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -o output.pdf input.pdf	
+
 Rsync:
 		
 	- Server kopieren
