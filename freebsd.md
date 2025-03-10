@@ -1,4 +1,4 @@
-# Boot and zpool partition setup
+# Boot / Partition Setup
 
 ```bash
 $ gpart destroy ad0
@@ -23,6 +23,47 @@ $ zfs destroy -r oldzroot@movedata
 # IMPORTANT: This is needed so that zfsloader finds the right bootfs, otherwise it will will complain about missing "loader.lua"
 $ zpool set bootfs=zroot/ROOT/default zroot 
 ```
+
+
+# Grundlegende Zpool und ZFS - Kommandos
+
+#### Alle Zpools verfügbar machen und die darin enthalten Datasets nicht automatisch mounten
+
+    zpool import -N
+
+#### Zpool umbenennen (und verfügbar machen)
+
+    zpool import old-name new-name
+
+#### Zpool persistieren und unzugänglich machen
+
+    zpool export pool-name
+
+#### Alle Datasets der verfügbaren Zpools (auf ihren vorgesehen Mountpoints) einhängen
+
+    zfs mount -a
+
+#### Alle gemounteten Datasets asuhängen
+
+    zfs umount -a
+
+#### Ein Dataset auf einem bestimmten Mountpoint einhängen
+
+    mount -t zfs poolname/datasetname /mnt```
+
+#### Den Mountpoint aller Datasets permanent anpassen
+
+```bash
+for dataset in $(zfs list -H -o name poolname); do
+    zfs set mountpoint=/neuer/pfad/$dataset $dataset
+done
+```
+
+#### Den Mountpoint für neue Datasets festlegen
+
+    $ zfs set mountpoint=/neuer/pfad poolname
+
+
 # ZFS Snapshots
 
 ```

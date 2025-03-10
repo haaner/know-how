@@ -32,6 +32,11 @@ docker ps -a --filter volume=ff6bf891801f0fd17d113a7098898f57f46cdf765b4e3575419
 # Container und sämtliche Volume- (und Bind-)Zuordnungen auflisten
 docker ps -a --format '{{ .ID }}' | xargs -I {} docker inspect -f '{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' {}
 
+# Dockerfile builden und (nach Login) auf Docker-Hub bereitstellen
+# docker build -t haaner/forum-php:8.2 .
+# docker login
+# docker push haaner/forum-php
+
 # Docker-Compose ausführen und detachen
 docker compose up -d
 
