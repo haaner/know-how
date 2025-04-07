@@ -380,6 +380,12 @@ HTTPS auf HTTP umsetzen:
 		
 	stty -a | grep columns
 	stty columns 120
+	
+# VIM
+
+#### Beim Pasting keine Text-Formatierung durchführen
+
+	:set paste
 
 # VIMdiff
 
@@ -392,12 +398,6 @@ HTTPS auf HTTP umsetzen:
 	zo 		open folded text
 	zc 		close folded text
 	Ctrl-W W toggle between diff columns
-	
-# VIM
-
-#### Beim Pasting keine Text-Formatierung durchführen
-
-	:set paste
 	
 # VirtualBox
 
