@@ -372,47 +372,46 @@ HTTPS auf HTTP umsetzen:
 	
 	$ socat OPENSSL-LISTEN:443,cert=cert.pem,key=key.pem,verify=0,fork,reuseaddr TCP4-CONNECT:localhost:80
 	
-UNIX-Terminal:
+# UNIX-Terminal
 
-	- Anzahl der maximal anzeigbaren Spalten anpassen
+#### Anzahl der maximal anzeigbaren Spalten anpassen
 		
-		$ stty -a | grep columns
-		$ stty columns 120
-	  
-VIMdiff:
+	stty -a | grep columns
+	stty columns 120
 
-	$ vimdiff /etc/orig /etc/new
+# VIMdiff
+
+	vimdiff /etc/orig /etc/new
 	
 	]c :	next difference
 	[c :	previous difference
-	do 		Gg.�berliegende Seite �bernehmen (obtain)
+	do 		Gg.überliegende Seite übernehmen (obtain)
 	dp 		Momentane Seite behalten (put)
 	zo 		open folded text
 	zc 		close folded text
 	Ctrl-W W toggle between diff columns
 	
-VIM:
+# VIM
 
-	- Beim Pasting keine Text-Formatierung durchf�hren
-		:set paste
+#### Beim Pasting keine Text-Formatierung durchführen
+
+	:set paste
 	
-VirtualBox:
+# VirtualBox
 
-	- HardDrive <-> VDI klonen
+#### HardDrive <-> VDI klonen
 
-	$ VBoxManage convertfromraw /dev/sda MyImage.vdi --format VDI
-	$ VBoxManage clonehd --format RAW file.vdi | dd of=/dev/sda
+	VBoxManage convertfromraw /dev/sda MyImage.vdi --format VDI
+	VBoxManage clonehd --format RAW file.vdi | dd of=/dev/sda
 	
-Xen:
+# Xen
 
 	xl list 
 	xl destroy 
 	xl create /etc/xen/win2008r2
 	
-Windows:
+# Windows
 
-	Pakete entfernen (via PowerShell), beispielsweise WindowsStore:
+#### Pakete entfernen (via PowerShell), beispielsweise WindowsStore
 		
-		Get-AppxPackage *windowsstore* | Remove-AppxPackage
-
-
+	Get-AppxPackage *windowsstore* | Remove-AppxPackage
