@@ -143,12 +143,19 @@ Check that Cpy%Sync is 100% finished; both copies are in sync then. Now let's br
 	lvcreate --name <logical-volume-name> --size <size> the-new-volume-group-name
 	dd if=/dev/volume-group/snapshot-name of=/dev/new-volume-group/new-logical-volume
 		
-# Services
+# systemctl
+
+#### Aktivierte Services auflisten
 
 	systemctl list-unit-files | grep enabled | sort
+
+#### Service aktvieren
+
 	systemctl enable php7.4-fpm-eibe
 
-	service apache2 restart
+#### Service restarten
+
+	systemctl restart apache2 
 
 # UFW
 
