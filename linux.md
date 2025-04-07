@@ -1,3 +1,57 @@
+# apt / dpkg 
+
+#### Installierte Pakete der Größe nach sortieren auflisten
+		
+	dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n
+		
+#### Installierte (Alt-)Kernel auflisten
+	 
+	dpkg --list | grep -i -E --color 'linux-image|linux-kernel' | grep '^ii'
+		
+#### Kernel reinstallieren
+	 
+	apt-get install --reinstall linux-image-generic linux-image-5.15.0-88-generic
+		
+#### Separates Repository hinzufügen
+	
+	add-apt-repository ppa:rdiff-backup/rdiff-backup-backports
+	add-apt-repository ppa:ondrej/php	
+	
+#### Repository-Key hinzufügen
+	
+	apt-key adv --keyserver keyserver.ubuntu.com --recv 3B4FE6ACC0B21F32
+	apt-key export 3B4FE6ACC0B21F32 | gpg --dearmour -o key.gpg
+	apt-key del 3B4FE6ACC0B21F32
+	mv key.gpg /etc/apt/trusted.gpg.d
+				
+#### Nur Security-Updates einspielen
+	
+	apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install
+
+#### Zurückgehaltene Pakete einspielen
+
+	apt dist-upgrade # falls dies nicht hilft:
+	apt install --only-upgrade failing-package # falls dies nicht hilft:
+	apt --with-new-pkgs upgrade failing-package
+				
+#### Manuell installierte Pakete anzeigen
+
+	apt-mark showmanual		
+
+#### Paket-Selektion erstellen
+
+	dpkg --get-selections > packages.lst
+	
+#### Paket-Selektion einspielen
+
+	apt-cache dumpavail | dpkg --merge-avail
+	dpkg --set-selections < packages.lst
+	apt install dselect ; apt dselect-upgrade
+
+#### Konfigurationen cleanen:
+	
+	find /etc \( -iname '*-' -o -iname '*~' -o -iname '*.bak' -o -iname '*.old' -o -iname '*.ucf-*' -o -iname '*.dpkg-*' -o -iname '*.distUpgrade' \) -exec rm '{}' +
+
 # Disk 
 
 #### Block-Devices inklusive Größen und RAID-Gruppierung auflisten
@@ -89,75 +143,19 @@ Check that Cpy%Sync is 100% finished; both copies are in sync then. Now let's br
 	lvcreate --name <logical-volume-name> --size <size> the-new-volume-group-name
 	dd if=/dev/volume-group/snapshot-name of=/dev/new-volume-group/new-logical-volume
 		
-UFW:
-	- Regeln auflisten
+# Services
 
-		$ ufw status numbered
+	systemctl list-unit-files | grep enabled | sort
+	systemctl enable php7.4-fpm-eibe
+
+	service apache2 restart
+
+# UFW
+
+#### Regeln auflisten
+
+	ufw status numbered
 		
-	- Ports freigeben
+#### Ports freigeben
 		
-		$ ufw allow proto tcp from 88.99.12.250 to any port 22,5666 comment "Hetzner Nagios(neu)"
-		
-Debian / Ubuntu: 
-
-	- Installierte Pakete der Größe nach sortieren auflisten
-		
-		$ dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n
-		
-	- Installierte (Alt-)Kernel auflisten
-	 
-		$ dpkg --list | grep -i -E --color 'linux-image|linux-kernel' | grep '^ii'
-		
-	- Kernel reinstallieren
-	 
-		$ apt-get install --reinstall linux-image-generic linux-image-5.15.0-88-generic
-		
-	- Separates Repository hinzufügen
-	
-		$ add-apt-repository ppa:rdiff-backup/rdiff-backup-backports
-		$ add-apt-repository ppa:ondrej/php	
-	
-	- Repository-Key hinzufügen
-	
-		$ apt-key adv --keyserver keyserver.ubuntu.com --recv 3B4FE6ACC0B21F32
-		$ apt-key export 3B4FE6ACC0B21F32 | gpg --dearmour -o key.gpg
-		$ apt-key del 3B4FE6ACC0B21F32
-		$ mv key.gpg /etc/apt/trusted.gpg.d
-				
-	- Nur Security-Updates einspielen
-	
-		$ apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install
-
-	- Zurückgehaltene Pakete einspielen
-
-		$ apt dist-upgrade # falls dies nicht hilft:
-		$ apt install --only-upgrade failing-package # falls dies nicht hilft:
-		$ apt --with-new-pkgs upgrade failing-package
-				
-	- Manuell installierte Pakete anzeigen
-
-		$ apt-mark showmanual		
-
-	- Paket-Selektion erstellen
-
-		$ dpkg --get-selections > packages.lst
-	
-	- Paket-Selektion einspielen
-
-		$ apt-cache dumpavail | dpkg --merge-avail
-		$ dpkg --set-selections < packages.lst
-		$ apt install dselect ; apt dselect-upgrade
-
-	- Konfigurationen cleanen:
-	
-		$ find /etc -iname '*-' -o -iname '*.bak' -o -iname '*.old' -o -iname '*.ucf-*' -o -iname '*.dpkg-*' -exec rm '{}' ';'
-	
-Services:
-
-	$ systemctl list-unit-files | grep enabled | sort
-	$ systemctl enable php7.4-fpm-eibe
-
-	$ service apache2 restart
-
-				
-# vim: ts=4:sw=4
+	ufw allow proto tcp from 88.99.12.250 to any port 22,5666 comment "Hetzner Nagios(neu)"
