@@ -149,7 +149,7 @@ Check that Cpy%Sync is 100% finished; both copies are in sync then. Now let's br
 
 	systemctl list-unit-files | grep enabled | sort
 
-#### Service aktvieren
+#### Service aktivieren
 
 	systemctl enable php7.4-fpm-eibe
 
