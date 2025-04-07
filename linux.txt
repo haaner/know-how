@@ -148,6 +148,10 @@ Debian / Ubuntu:
 		$ dpkg --set-selections < packages.lst
 		$ apt install dselect ; apt dselect-upgrade
 
+	- Konfigurationen cleanen:
+	
+		$ find /etc -iname '*-' -o -iname '*.bak' -o -iname '*.old' -o -iname '*.ucf-*' -o -iname '*.dpkg-*' -exec rm '{}' ';'
+	
 Services:
 
 	$ systemctl list-unit-files | grep enabled | sort
