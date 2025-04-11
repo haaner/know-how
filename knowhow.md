@@ -176,90 +176,107 @@ echo '{
 }' > $HOME/Library/KeyBindings/DefaultKeyBinding.dict
 ```
 
-MySQL:
+## MySQL:
 
-   - root-Passwort in Datei speichern und verwenden
-   	
-		$ cat < _END_ >> .my.cnf
+- root-Passwort in Datei speichern und verwenden
+
+	```
+	$ cat < _END_ >> .my.cnf
 		
-		[client]
-		user=root
-		password=MyPassword
+	[client]
+	user=root
+	password=MyPassword
 			
-		_END_
+	_END_
+
+	$ chmod 600 .my.cnf
+	$ mysql --defaults-extra-file=~/.my.cnf
+	```
+
+- root-Passwort ändern
+
+	```
+	ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'yourpasswd';
+	```
+
+- Alle Tabellen und den zugehörigen LOCK-Status anzeigen:
 	
-		$ chmod 600 .my.cnf
-		$ mysql --defaults-extra-file=~/.my.cnf
-		
-	- root-Passwort ändern
-
-		ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'yourpasswd';
-
-	- Alle Tabellen und den zugeh�rigen LOCK-Status anzeigen:
+	```SHOW OPEN TABLES```
 	
-		SHOW OPEN TABLES
-
-	- Alle gelockten Tabellen anzeigen:
+- Alle gelockten Tabellen anzeigen:
     	
-		SHOW OPEN TABLES WHERE In_use > 0		
+	```SHOW OPEN TABLES WHERE In_use > 0```
 		
-	-  Let's see the list of the current processes, one of them is locking your table(s)
+-  Let's see the list of the current processes, one of them is locking your table(s)
 
-		SHOW PROCESSLIST;
+	```SHOW PROCESSLIST;```
 
-	- Kill one of these processes
+- Kill one of these processes
 
-		KILL <put_process_id_here>;
+	```KILL <put_process_id_here>;```
 		
-	- Keys f�r Abfrage ermitteln (f�r die Optimierung von Zugriffszeiten):
+- Keys für Abfrage ermitteln (für die Optimierung von Zugriffszeiten):
 	
-		EXPLAIN SELECT SQL_NO_CACHE id, COUNT(*) FROM semmel.Person WHERE tmpName LIKE 'horst%' 
+	```EXPLAIN SELECT SQL_NO_CACHE id, COUNT(*) FROM semmel.Person WHERE tmpName LIKE 'horst%'``` 
 		
-	- Summierung �ber gruppierten Sub-Select:
+- Summierung über gruppierten Sub-Select:
 	
-		SELECT SUM(sub.totals) FROM (SELECT COUNT(*) AS totals FROM `MetaField` GROUP BY srcId) AS sub
+	```
+	SELECT SUM(sub.totals) FROM (SELECT COUNT(*) AS totals FROM `MetaField` GROUP BY srcId) AS sub
+	```
 
-	- Tabellen / Daten aus Bin�rdateien wiederherstellen:
+- Tabellen / Daten aus Binärdateien wiederherstellen:
 		
-		Wenn es sich um eine MyISAM-Tabelle handelt:
+	Wenn es sich um eine MyISAM-Tabelle handelt:
 
-		- Die Dateien *.frm, *.MYD, *.MYI in ein Datenbank-Verzeichnis "my_restore" unterhalb von /var/lib/mysql kopieren.
+	- Die Dateien *.frm, *.MYD, *.MYI in ein Datenbank-Verzeichnis "my_restore" unterhalb von /var/lib/mysql kopieren.
 
+		```
 		# cp myTable.* /var/lib/mysql/my_restore
 		# chown -R mysql:mysql /var/lib/mysql/my_restore
+		```
+	
+	- Den MySQL-Serverprozess reloaden bzw neu-starten:
 
-		- Den MySQL-Serverprozess reloaden bzw neu-starten:
+		```
+		$ /etc/init.d/mysql reload
+		```
 
-		# /etc/init.d/mysql reload
+	---
 
-		---
+	Wenn sich um eine INNODB-Tabelle handelt:
 
-		Wenn sich um eine INNODB-Tabelle handelt:
+	- Die ursprünglichen CREATE-Befehle neu generieren lassen:
 
-		- Die urspr�nglichen CREATE-Befehle neu generieren lassen:
+		```
+		$ mysqlfrm --diagnostic myTable.frm > myTable.sql
+		```
 
-		# mysqlfrm --diagnostic myTable.frm > myTable.sql
+	- Das Row-Format der wiederherzustellenden-Tabelle ermitteln und gg.falls den CREATE-Befehl anpassen, z.B.
 
-		- Das Row-Format der wiederherzustellenden-Tabelle ermitteln und gg.falls den CREATE-Befehl anpassen, z.B.
-
+		```
 		CREATE TABLE my_restore.myTable ... ENGINE=Innodb ROW_FORMAT=Compact
+		```
 
-		- Mit MySQL-Server verbinden und das sql-File sourcen und danach die implizit erzeugte ibd-Datei discarden:
+	- Mit MySQL-Server verbinden und das sql-File sourcen und danach die implizit erzeugte ibd-Datei discarden:
 
+		```
 		mysql> SOURCE myTable.sql;
 		mysql> ALTER TABLE myTable DISCARD TABLESPACE;
+		```
 
-		- Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis
-		  "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausf�hren:
+	- Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausführen:
 
-		# cp myTable.ibd /var/lib/mysql/my_restore
-		# chown -R mysql:mysql /var/lib/mysql/my_restore
-
+		```
+		$ cp myTable.ibd /var/lib/mysql/my_restore
+		$# chown -R mysql:mysql /var/lib/mysql/my_restore
+		
 		mysql> ALTER TABLE myTable IMPORT TABLESPACE;
+		```
 
-		- Importierte Daten begutachten:
+	- Importierte Daten begutachten:
 
-		mysql> SELECT * FROM myTable;
+		```mysql> SELECT * FROM myTable;```
 		
 Jquery: 
 	- Attribut-basierte Selektionen:
