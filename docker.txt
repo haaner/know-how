@@ -32,6 +32,11 @@ docker ps -a --filter volume=ff6bf891801f0fd17d113a7098898f57f46cdf765b4e3575419
 # Container und sämtliche Volume- (und Bind-)Zuordnungen auflisten
 docker ps -a --format '{{ .ID }}' | xargs -I {} docker inspect -f '{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' {}
 
+# Dockerfile builden und (nach Login) auf Docker-Hub bereitstellen
+# docker build -t haaner/forum-php:8.2 .
+# docker login
+# docker push haaner/forum-php
+
 # Docker-Compose ausführen und detachen
 docker compose up -d
 
@@ -46,6 +51,9 @@ docker compose up --build
 
 # Befehl in dem Service-Container "app" ausführen, der per docker-compose gestartet wurde
 docker compose exec app /bin/sh
+
+# Kopieren aus dem Container
+docker compose cp php:/srv/app/vendor .
 
 # Befehl als root-User in dem Service-Container "app" ausführen, der per docker-compose gestartet wurde
 docker compose exec -u 0 app /bin/sh

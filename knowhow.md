@@ -1,110 +1,113 @@
-## Apache 
+# Apache 
 
-- mod_rewrite: (Using variables on the right side of RewriteCond by back-reference: \1)
+## mod_rewrite
 
-	```
+#### Using variables on the right side of RewriteCond by back-reference: \1
+
 	RewriteCond %{DOCUMENT_ROOT},%{REQUEST_FILENAME} ^([^,]*+),\1/*+(.*?/)/*+([^/]*)$ 
 	RewriteRule ^ - [E=CURPATH:%2,E=CURNAME:%3]
-	```
 	
-	[ http://www.ckollars.org/apache-rewrite-htaccess.html#precedence ]
+[ http://www.ckollars.org/apache-rewrite-htaccess.html#precedence ]
 		
-## Composer
+		
+# Composer
 
-- ext-gmp ignorieren (erst ab Composer 2 m�glich)
+#### ext-gmp ignorieren (erst ab Composer 2 möglich)
 	
-	```$ php bin/composer.phar install --ignore-platform-req=ext-gmp```
+	php bin/composer.phar install --ignore-platform-req=ext-gmp
 		
-- Content-Hash im composer.lock korrigieren: 
+#### Content-Hash in composer.lock korrigieren: 
 		
-	```$ composer update --lock```
+	composer update --lock
 
-## [FreeBSD](freebsd.md)		
+
+# [FreeBSD](freebsd.md)		
+
 
 ## CLion
 
 - Auswertungszeit anpassen: Ctrl+Shift+A, "registry" eingeben und den Wert "cidr.debugger.timeout.evaluate" ändern 
 
-## GDB:
+
+## GDB
 
 Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 
-```
-	$ gdb --args ./test -p1 --param=2 
-```
+	gdb --args ./test -p1 --param=2 
 
-- Executable einlesen
+#### Executable einlesen
 
-	```file ./test```
+	file ./test
 
-- Sourcen "refreshen"
+#### Sourcen "refreshen"
 
-	```directory```
+	directory
 
-- FAIL-Funktion aus error.cpp auflisten
+#### FAIL-Funktion aus error.cpp auflisten
 
-	```list error.cpp:FAIL```
+	list error.cpp:FAIL
 
-- Zeile 10 aus error.cpp auflisten
+#### Zeile 10 aus error.cpp auflisten
 		
-	```list error.cpp:10```
+	list error.cpp:10
 	
-- Breakpoint auf Zeile 12 setzen
+#### Breakpoint auf Zeile 12 setzen
 
-	```b 12```  
-	```b 12 if stats.iters <= 25```
+	b 12
+	b 12 if stats.iters <= 25
 		
-- Breapoints listen
+#### Breapoints listen
 
-	```i b```
+	i b
 
-- Nachträgliche Bedingung für BP ergänzen
+#### Nachträgliche Bedingung für BP ergänzen
 
-	```cond 1 i == 99```
+	cond 1 i == 99
 
-- Breakpoint disablen / enablen / l�schen
+#### Breakpoint disablen / enablen / löschen
 
-	```dis 1 / en 1 / d 1```
+	dis 1 / en 1 / d 1
 
-- Breakpoints speichern und wieder einlesen
+#### Breakpoints speichern und wieder einlesen
 
-	```save breakpoints file.txt```
-	```source file.txt```
+	save breakpoints file.txt
+	source file.txt
 
-- Watchpoint setzen
+#### Watchpoint setzen
 	
-	```watch stats.iters```
+	watch stats.iters
 
-- Variable bei jedem Stop anzeigen
+#### Variable bei jedem Stop anzeigen
 		
-	```display stats.iters```
+	display stats.iters
 
-- Starten / Fortsetzen / Steppen / N�chste
+#### Starten / Fortsetzen / Steppen / Nächste
 		
-	```r / c / s / n```
+	r / c / s / n
 
-- Funktion beenden
+#### Funktion beenden
 
-	```fin```
+	fin
 
-- Stack hoch / runter
+#### Stack hoch / runter
 
-	```up / down```
+	up / down
 
-- Backtrace anzeigen / 3. Frame selektieren
+#### Backtrace anzeigen / 3. Frame selektieren
 
-	```bt```
-	```frame 3```
+	bt
+	frame 3
 
-	```info frame```
-	```info args```
-	```info locals```
+	info frame
+	info args
+	info locals
 
-- Funktion aufrufen (evtl. vorher: set overload-resolution off)
+#### Funktion aufrufen (evtl. vorher: set overload-resolution off)
 		
-	```p member_function()```
+	p member_function()
+
 		
-## Grub
+# Grub
 
 - Installation (bei RAIDs auf alle beteiligte Platten klatschen, die die boot-Partition enthalten) 
 
@@ -141,6 +144,8 @@ Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 	done
 ```
 
+# [Linux](linux.md)		
+
 ## LFTP
 		
 - Remote Verzeichnis komplett downloaden
@@ -156,90 +161,127 @@ Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 		
 	(Bei Fehlermledung wg. 'Host key verification' zuvor kurz mit SSH verbinden)			
 		
-MySQL:
+## macOS
 
-   - root-Passwort in Datei speichern und verwenden
-   	
-		$ cat < _END_ >> .my.cnf
+### Home/End Key-Binding korrigieren
+
+```
+mkdir -p $HOME/Library/KeyBindings
+
+echo '{
+	/* Remap Home / End keys to be correct */
+	"\UF729" = "moveToBeginningOfLine:"; /* Home */
+	"\UF72B" = "moveToEndOfLine:"; /* End */
+	"$\UF729" = "moveToBeginningOfLineAndModifySelection:"; /* Shift + Home */
+	"$\UF72B" = "moveToEndOfLineAndModifySelection:"; /* Shift + End */
+	"^\UF729" = "moveToBeginningOfDocument:"; /* Ctrl + Home */
+	"^\UF72B" = "moveToEndOfDocument:"; /* Ctrl + End */
+	"$^\UF729" = "moveToBeginningOfDocumentAndModifySelection:"; /* Shift + Ctrl + Home */
+	"$^\UF72B" = "moveToEndOfDocumentAndModifySelection:"; /* Shift + Ctrl + End */
+}' > $HOME/Library/KeyBindings/DefaultKeyBinding.dict
+```
+
+## MySQL:
+
+- root-Passwort in Datei speichern und verwenden
+
+	```
+	$ cat < _END_ >> .my.cnf
 		
-		[client]
-		user=root
-		password=MyPassword
+	[client]
+	user=root
+	password=MyPassword
 			
-		_END_
+	_END_
+
+	$ chmod 600 .my.cnf
+	$ mysql --defaults-extra-file=~/.my.cnf
+	```
+
+- root-Passwort ändern
+
+	```
+	ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'yourpasswd';
+	```
+
+- Alle Tabellen und den zugehörigen LOCK-Status anzeigen:
 	
-		$ chmod 600 .my.cnf
-		$ mysql --defaults-extra-file=~/.my.cnf
-		
-	- root-Passwort ändern
-
-		ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'yourpasswd';
-
-	- Alle Tabellen und den zugeh�rigen LOCK-Status anzeigen:
+	```SHOW OPEN TABLES```
 	
-		SHOW OPEN TABLES
-
-	- Alle gelockten Tabellen anzeigen:
+- Alle gelockten Tabellen anzeigen:
     	
-		SHOW OPEN TABLES WHERE In_use > 0		
+	```SHOW OPEN TABLES WHERE In_use > 0```
 		
-	-  Let's see the list of the current processes, one of them is locking your table(s)
+-  Let's see the list of the current processes, one of them is locking your table(s)
 
-		SHOW PROCESSLIST;
+	```SHOW PROCESSLIST;```
 
-	- Kill one of these processes
+- Kill one of these processes
 
-		KILL <put_process_id_here>;
+	```KILL <put_process_id_here>;```
 		
-	- Keys f�r Abfrage ermitteln (f�r die Optimierung von Zugriffszeiten):
+- Keys für Abfrage ermitteln (für die Optimierung von Zugriffszeiten):
 	
-		EXPLAIN SELECT SQL_NO_CACHE id, COUNT(*) FROM semmel.Person WHERE tmpName LIKE 'horst%' 
+	```EXPLAIN SELECT SQL_NO_CACHE id, COUNT(*) FROM semmel.Person WHERE tmpName LIKE 'horst%'``` 
 		
-	- Summierung �ber gruppierten Sub-Select:
+- Summierung über gruppierten Sub-Select:
 	
-		SELECT SUM(sub.totals) FROM (SELECT COUNT(*) AS totals FROM `MetaField` GROUP BY srcId) AS sub
+	```
+	SELECT SUM(sub.totals) FROM (SELECT COUNT(*) AS totals FROM `MetaField` GROUP BY srcId) AS sub
+	```
 
-	- Tabellen / Daten aus Bin�rdateien wiederherstellen:
+- Tabellen / Daten aus Binärdateien wiederherstellen:
 		
-		Wenn es sich um eine MyISAM-Tabelle handelt:
+	Wenn es sich um eine MyISAM-Tabelle handelt:
 
-		- Die Dateien *.frm, *.MYD, *.MYI in ein Datenbank-Verzeichnis "my_restore" unterhalb von /var/lib/mysql kopieren.
+	- Die Dateien *.frm, *.MYD, *.MYI in ein Datenbank-Verzeichnis "my_restore" unterhalb von /var/lib/mysql kopieren.
 
+		```
 		# cp myTable.* /var/lib/mysql/my_restore
 		# chown -R mysql:mysql /var/lib/mysql/my_restore
+		```
+	
+	- Den MySQL-Serverprozess reloaden bzw neu-starten:
 
-		- Den MySQL-Serverprozess reloaden bzw neu-starten:
+		```
+		$ /etc/init.d/mysql reload
+		```
 
-		# /etc/init.d/mysql reload
+	---
 
-		---
+	Wenn sich um eine INNODB-Tabelle handelt:
 
-		Wenn sich um eine INNODB-Tabelle handelt:
+	- Die ursprünglichen CREATE-Befehle neu generieren lassen:
 
-		- Die urspr�nglichen CREATE-Befehle neu generieren lassen:
+		```
+		$ mysqlfrm --diagnostic myTable.frm > myTable.sql
+		```
 
-		# mysqlfrm --diagnostic myTable.frm > myTable.sql
+	- Das Row-Format der wiederherzustellenden-Tabelle ermitteln und gg.falls den CREATE-Befehl anpassen, z.B.
 
-		- Das Row-Format der wiederherzustellenden-Tabelle ermitteln und gg.falls den CREATE-Befehl anpassen, z.B.
-
+		```
 		CREATE TABLE my_restore.myTable ... ENGINE=Innodb ROW_FORMAT=Compact
+		```
 
-		- Mit MySQL-Server verbinden und das sql-File sourcen und danach die implizit erzeugte ibd-Datei discarden:
+	- Mit MySQL-Server verbinden und das sql-File sourcen und danach die implizit erzeugte ibd-Datei discarden:
 
+		```
 		mysql> SOURCE myTable.sql;
 		mysql> ALTER TABLE myTable DISCARD TABLESPACE;
+		```
 
-		- Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis
-		  "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausf�hren:
+	- Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausführen:
 
-		# cp myTable.ibd /var/lib/mysql/my_restore
-		# chown -R mysql:mysql /var/lib/mysql/my_restore
-
+		```
+		$ cp myTable.ibd /var/lib/mysql/my_restore
+		$# chown -R mysql:mysql /var/lib/mysql/my_restore
+		
 		mysql> ALTER TABLE myTable IMPORT TABLESPACE;
+		```
 
-		- Importierte Daten begutachten:
+	- Importierte Daten begutachten:
 
-		mysql> SELECT * FROM myTable;
+		```mysql> SELECT * FROM myTable;```
 		
 Jquery: 
 	- Attribut-basierte Selektionen:
@@ -252,12 +294,16 @@ Excel:
 		=SUMME( -- die strg-taste gedr�ckt halten und alle zellen markieren, die addiert werden sollen - Klammer zu und RETURN dr�cken
 		=SUMME(B1:B4;B6:B8) (Bereiche definieren)		
 		
-PDF:
+# PDF
 	
-	- Kompatibilit�ts-Level anpassen:
+#### Kompatibilitäts-Level anpassen
 	
-		gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -o output.pdf PhpStorm/accedo/backend/pdf/crest_Vorlage_Provisionsavis.pdf		
-		
+	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -o output.pdf input.pdf	
+
+#### Kompression entfernen
+
+	gs -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -o output.pdf input.pdf	
+
 Rsync:
 		
 	- Server kopieren
@@ -350,47 +396,46 @@ HTTPS auf HTTP umsetzen:
 	
 	$ socat OPENSSL-LISTEN:443,cert=cert.pem,key=key.pem,verify=0,fork,reuseaddr TCP4-CONNECT:localhost:80
 	
-UNIX-Terminal:
+# UNIX-Terminal
 
-	- Anzahl der maximal anzeigbaren Spalten anpassen
+#### Anzahl der maximal anzeigbaren Spalten anpassen
 		
-		$ stty -a | grep columns
-		$ stty columns 120
-	  
-VIMdiff:
+	stty -a | grep columns
+	stty columns 120
+	
+# VIM
 
-	$ vimdiff /etc/orig /etc/new
+#### Beim Pasting keine Text-Formatierung durchführen
+
+	:set paste
+
+# VIMdiff
+
+	vimdiff /etc/orig /etc/new
 	
 	]c :	next difference
 	[c :	previous difference
-	do 		Gg.�berliegende Seite �bernehmen (obtain)
+	do 		Gg.überliegende Seite übernehmen (obtain)
 	dp 		Momentane Seite behalten (put)
 	zo 		open folded text
 	zc 		close folded text
 	Ctrl-W W toggle between diff columns
 	
-VIM:
+# VirtualBox
 
-	- Beim Pasting keine Text-Formatierung durchf�hren
-		:set paste
+#### HardDrive <-> VDI klonen
+
+	VBoxManage convertfromraw /dev/sda MyImage.vdi --format VDI
+	VBoxManage clonehd --format RAW file.vdi | dd of=/dev/sda
 	
-VirtualBox:
-
-	- HardDrive <-> VDI klonen
-
-	$ VBoxManage convertfromraw /dev/sda MyImage.vdi --format VDI
-	$ VBoxManage clonehd --format RAW file.vdi | dd of=/dev/sda
-	
-Xen:
+# Xen
 
 	xl list 
 	xl destroy 
 	xl create /etc/xen/win2008r2
 	
-Windows:
+# Windows
 
-	Pakete entfernen (via PowerShell), beispielsweise WindowsStore:
+#### Pakete entfernen (via PowerShell), beispielsweise WindowsStore
 		
-		Get-AppxPackage *windowsstore* | Remove-AppxPackage
-
-
+	Get-AppxPackage *windowsstore* | Remove-AppxPackage
