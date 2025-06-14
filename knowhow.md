@@ -21,6 +21,10 @@
 
 ## [FreeBSD](freebsd.md)		
 
+## CLion
+
+- Auswertungszeit anpassen: Ctrl+Shift+A, "registry" eingeben und den Wert "cidr.debugger.timeout.evaluate" ändern 
+
 ## GDB:
 
 Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
@@ -152,26 +156,6 @@ Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 		
 	(Bei Fehlermledung wg. 'Host key verification' zuvor kurz mit SSH verbinden)			
 		
-## macOS
-
-### Home/End Key-Binding korrigieren
-
-```
-mkdir -p $HOME/Library/KeyBindings
-
-echo '{
-	/* Remap Home / End keys to be correct */
-	"\UF729" = "moveToBeginningOfLine:"; /* Home */
-	"\UF72B" = "moveToEndOfLine:"; /* End */
-	"$\UF729" = "moveToBeginningOfLineAndModifySelection:"; /* Shift + Home */
-	"$\UF72B" = "moveToEndOfLineAndModifySelection:"; /* Shift + End */
-	"^\UF729" = "moveToBeginningOfDocument:"; /* Ctrl + Home */
-	"^\UF72B" = "moveToEndOfDocument:"; /* Ctrl + End */
-	"$^\UF729" = "moveToBeginningOfDocumentAndModifySelection:"; /* Shift + Ctrl + Home */
-	"$^\UF72B" = "moveToEndOfDocumentAndModifySelection:"; /* Shift + Ctrl + End */
-}' > $HOME/Library/KeyBindings/DefaultKeyBinding.dict
-```
-
 MySQL:
 
    - root-Passwort in Datei speichern und verwenden
