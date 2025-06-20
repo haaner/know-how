@@ -28,6 +28,17 @@
 
 - Auswertungszeit anpassen: Ctrl+Shift+A, "registry" eingeben und den Wert "cidr.debugger.timeout.evaluate" ändern 
 
+## DNS / Email / Spam
+
+- Spamhaus befragen, ob die IP-Adresse 78.48.216.33 ein bekannter Spam-Server ist
+   dig 33.216.48.78.zen.spamhaus.org +short
+
+Wenn es kein Spam-Server ist, sollte eine Adresse der Form 127.0.0.4, 127.0.0.2, 127.0.0.10 zurückgeliefert werden. Wenn jedoch 127.255.255.254 zurückgegeben wird, dann wird vermutlich ein Public Resolver verwendet
+
+- Herausfinden welcher Resolver verwendet wird
+
+   dig -t txt whoami.fastly.net +short
+   dig @208.67.222.220 -t txt whoami.fastly.net +short
 
 ## GDB
 
