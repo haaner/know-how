@@ -122,6 +122,15 @@ Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 		
 	p member_function()
 
+#### Prozess suspenden und detachen
+
+	signal SIGSTOP
+	detach
+
+#### An Prozess attachen
+
+	gdb -p PID
+
 		
 # Grub
 
