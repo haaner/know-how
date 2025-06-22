@@ -155,6 +155,18 @@ Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 	1511  pstree
 	1512  reboot
 	```
+- Herausfinden ob GRUB der Bootloader ist
+
+	```
+		dd if=/dev/sda bs=512 count=1 2> /dev/null | grep -q GRUB && echo "GRUB found"
+	```
+
+	```
+		file -s /dev/sda
+	```
+
+	/dev/sda: x86 boot sector; GRand Unified Bootloader, stage1 version 0x3 --> GRUB 1
+	/dev/sda: x86 boot sector; partition 1: ID=0x83, active, starthead 32, startsector 2048 --> GRUB 2
 
 ## InfluxDB
 
