@@ -168,6 +168,15 @@ Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 	/dev/sda: x86 boot sector; GRand Unified Bootloader, stage1 version 0x3 --> GRUB 1
 	/dev/sda: x86 boot sector; partition 1: ID=0x83, active, starthead 32, startsector 2048 --> GRUB 2
 
+## GPG
+
+	- Key(s) aus einer GPG-Datei extrahieren und im ASCII-Format speichern
+
+		gpg --import key.gpg
+		gpg --list-keys
+		gpg --armor --export KEY_ID > key.asc
+		gpg --delete-keys KEY_ID
+
 ## InfluxDB
 
    - Datenpunkte hinzufügen via API
