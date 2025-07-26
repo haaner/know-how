@@ -37,6 +37,20 @@
 	apt dist-upgrade # falls dies nicht hilft:
 	apt install --only-upgrade failing-package # falls dies nicht hilft:
 	apt --with-new-pkgs upgrade failing-package
+
+#### Dritt-Repository in Unattended Upgrades einbeziehen
+	
+Nach Ausführung von `apt policy`:
+
+	...
+ 	500 https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy/main i386 Packages
+     release v=22.04,o=LP-PPA-ondrej-php,a=jammy,n=jammy,l=PPA for PHP,c=main,b=i386
+     origin ppa.launchpadcontent.net
+	...
+
+die Werte von o= und a= in der Datei /etc/apt/apt.conf.d/50unattended-upgrades innerhalb von Unattended-Upgrade::Allowed-Origins folgendermaßen hinzufügen:
+
+   	"LP-PPA-ondrej-php:${distro_codename}";
 				
 #### Manuell installierte Pakete anzeigen
 
