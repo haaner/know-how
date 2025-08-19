@@ -1,3 +1,16 @@
+# Android
+
+- Pakete entfernen
+ 
+    Platform-Tools downloaden und entpacken: https://developer.android.com/tools/releases/platform-tools
+
+    Am Handy den Developer Modus + USB aktivieren (Telefoninfo / Softwareinfo / 7 mal auf Build-Nummer klicken)
+
+    	adb devices 
+    	adb shell 
+		pm list packages | grep xy
+    	pm uninstall -k --user 0 package-name
+
 # Apache 
 
 ## mod_rewrite

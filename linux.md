@@ -10,7 +10,7 @@
 
 #### Alt-Kernel entfernen
 
-	apt purge linux-image-6.8.0-56-generic linux-headers-6.8.0-56-generic linux-modules-6.8.0-56-generic
+	apt purge linux-image-$i-generic linux-headers-$i-generic linux-modules-$i-generic
 		
 #### Kernel reinstallieren
 	 
