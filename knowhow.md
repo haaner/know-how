@@ -1,21 +1,22 @@
 # Android
 
-- Pakete entfernen
+### Pakete entfernen
  
-    Platform-Tools downloaden und entpacken: https://developer.android.com/tools/releases/platform-tools
+Platform-Tools downloaden und entpacken: https://developer.android.com/tools/releases/platform-tools
 
-    Am Handy den Developer Modus + USB aktivieren (Telefoninfo / Softwareinfo / 7 mal auf Build-Nummer klicken)
+Am Handy den Developer Modus + USB aktivieren (Telefoninfo / Softwareinfo / 7 mal auf Build-Nummer klicken)
 
-    	adb devices 
-    	adb shell 
-		pm list packages | grep xy
-    	pm uninstall -k --user 0 package-name
+	adb devices 
+    adb shell 
+	pm list packages | grep xy
+    pm uninstall -k --user 0 package-name
+
 
 # Apache 
 
 ## mod_rewrite
 
-#### Using variables on the right side of RewriteCond by back-reference: \1
+### Using variables on the right side of RewriteCond by back-reference: \1
 
 	RewriteCond %{DOCUMENT_ROOT},%{REQUEST_FILENAME} ^([^,]*+),\1/*+(.*?/)/*+([^/]*)$ 
 	RewriteRule ^ - [E=CURPATH:%2,E=CURNAME:%3]
@@ -25,11 +26,11 @@
 		
 # Composer
 
-#### ext-gmp ignorieren (erst ab Composer 2 möglich)
+### ext-gmp ignorieren (erst ab Composer 2 möglich)
 	
 	php bin/composer.phar install --ignore-platform-req=ext-gmp
 		
-#### Content-Hash in composer.lock korrigieren: 
+### Content-Hash in composer.lock korrigieren: 
 		
 	composer update --lock
 
@@ -37,28 +38,33 @@
 # [FreeBSD](freebsd.md)		
 
 
-## CLion
+# CLion
 
-- Auswertungszeit anpassen: Ctrl+Shift+A, "registry" eingeben und den Wert "cidr.debugger.timeout.evaluate" ändern 
+### Debugging-Auswertungszeit anpassen
 
-## DNS / Spam
+Ctrl+Shift+A, "registry" eingeben und den Wert "cidr.debugger.timeout.evaluate" ändern 
 
-- Spamhaus befragen, ob die IP-Adresse 78.48.216.33 ein bekannter Spam-Server ist
-   dig 33.216.48.78.zen.spamhaus.org +short
+
+# DNS / Spam
+
+### Spamhaus befragen, ob die IP-Adresse 78.48.216.33 ein bekannter Spam-Server ist
+
+	dig 33.216.48.78.zen.spamhaus.org +short
 
 Wenn es kein Spam-Server ist, sollte eine Adresse der Form 127.0.0.4, 127.0.0.2, 127.0.0.10 zurückgeliefert werden. Wenn jedoch 127.255.255.254 zurückgegeben wird, dann wird vermutlich ein Public Resolver verwendet
 
- - Validity (senderscore.com) befragen, ob das Rate-Limit für den DNS Resolver erreicht ist;
+### Validity (senderscore.com) befragen, ob das Rate-Limit für den DNS Resolver erreicht ist;
 
-   dig 2.0.0.127.bl.score.senderscore.com +short @8.8.8.8
-   dig 2.0.0.127.bl.score.senderscore.com +short
+	dig 2.0.0.127.bl.score.senderscore.com +short @8.8.8.8
+   	dig 2.0.0.127.bl.score.senderscore.com +short
 
-- Herausfinden welcher Resolver verwendet wird
+### Herausfinden welcher Resolver verwendet wird
 
-   dig -t txt whoami.fastly.net +short
-   dig @208.67.222.220 -t txt whoami.fastly.net +short
+   	dig -t txt whoami.fastly.net +short
+   	dig @208.67.222.220 -t txt whoami.fastly.net +short
 
-## GDB
+
+# GDB
 
 Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 
@@ -145,17 +151,36 @@ Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 	gdb -p PID
 
 		
+# GitLab
+
+### Das Bare-Repository zu einem Projekt auf Filesystem-Ebene lokalisieren:
+	
+Zunächst die ID eines Projekts rausfinden, indem man den Source-Code der Repository-Page nach "project_id durchsucht. Danach den SHA256-Hash der Projekt-ID bestimmen: 
+
+	echo -n 31 | sha256sum 
+
+Anhand des Hashes das Verzeichnis unter /var/opt/gitlab/git-data/repositories/@hashed/ ermitteln. 
+
+
+# GPG
+
+### Key(s) aus einer GPG-Datei extrahieren und im ASCII-Format speichern
+
+	gpg --import key.gpg
+	gpg --list-keys
+	gpg --armor --export KEY_ID > key.asc
+	gpg --delete-keys KEY_ID
+
+
 # Grub
 
-- Installation (bei RAIDs auf alle beteiligte Platten klatschen, die die boot-Partition enthalten) 
+### Installation (bei RAIDs auf alle beteiligte Platten klatschen, die die boot-Partition enthalten) 
 
-	```	
-		grub-install /dev/sda
-		grub-install /dev/sdb 
-	```
+	grub-install /dev/sda
+	grub-install /dev/sdb 
 	
-	Auszug aus History des internen Backup-Servers
-	```	
+Auszug aus History des internen Backup-Servers
+
 	1502  cfdisk /dev/sdb
 	1503  mdadm --manage /dev/md0  --add /dev/sdb2
 	1504  mdadm --manage /dev/md1  --add /dev/sdb4
@@ -167,30 +192,20 @@ Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 	1510  grub-install /dev/sdb
 	1511  pstree
 	1512  reboot
-	```
-- Herausfinden ob GRUB der Bootloader ist
 
-	```
-		dd if=/dev/sda bs=512 count=1 2> /dev/null | grep -q GRUB && echo "GRUB found"
-	```
+### Herausfinden ob GRUB der Bootloader ist
 
-	```
-		file -s /dev/sda
-	```
+	dd if=/dev/sda bs=512 count=1 2> /dev/null | grep -q GRUB && echo "GRUB found"  
 
-	/dev/sda: x86 boot sector; GRand Unified Bootloader, stage1 version 0x3 --> GRUB 1
-	/dev/sda: x86 boot sector; partition 1: ID=0x83, active, starthead 32, startsector 2048 --> GRUB 2
+ bzw. genauer:    	
+	
+	file -s /dev/sda
+	
+/dev/sda: x86 boot sector; GRand Unified Bootloader, stage1 version 0x3 --> GRUB 1    
+/dev/sda: x86 boot sector; partition 1: ID=0x83, active, starthead 32, startsector 2048 --> GRUB 2
 
-## GPG
 
-	- Key(s) aus einer GPG-Datei extrahieren und im ASCII-Format speichern
-
-		gpg --import key.gpg
-		gpg --list-keys
-		gpg --armor --export KEY_ID > key.asc
-		gpg --delete-keys KEY_ID
-
-## InfluxDB
+# InfluxDB
 
    - Datenpunkte hinzufügen via API
 
@@ -203,44 +218,47 @@ Via `--args` können Kommandozeilen-Parameter an gdb übergeben werden
 	done
 ```
 
+
 # [Linux](linux.md)		
 
-## LFTP
+
+# LFTP
 		
-- Remote Verzeichnis komplett downloaden
+### Remote Verzeichnis komplett downloaden
 
-	```lftp> mirror .```		
-- Lokales Verzeichnis hochladen und GIT-Ordner weglassen
+	lftp> mirror .		
 
-	```lftp> mirror -R . --exclude .git/```
+### Lokales Verzeichnis hochladen und GIT-Ordner weglassen
 
-- Verbindung via SFTP
+	lftp> mirror -R . --exclude .git/
+
+### Verbindung via SFTP
 	
-	```lftp sftp://user@host```
+	lftp sftp://user@host```
 		
-	(Bei Fehlermledung wg. 'Host key verification' zuvor kurz mit SSH verbinden)			
-		
-## macOS
+(Bei Fehlermledung wg. 'Host key verification' zuvor kurz mit SSH verbinden)			
+
+
+# macOS
 
 ### Home/End Key-Binding korrigieren
 
-```
-mkdir -p $HOME/Library/KeyBindings
+	mkdir -p $HOME/Library/KeyBindings
 
-echo '{
-	/* Remap Home / End keys to be correct */
-	"\UF729" = "moveToBeginningOfLine:"; /* Home */
-	"\UF72B" = "moveToEndOfLine:"; /* End */
-	"$\UF729" = "moveToBeginningOfLineAndModifySelection:"; /* Shift + Home */
-	"$\UF72B" = "moveToEndOfLineAndModifySelection:"; /* Shift + End */
-	"^\UF729" = "moveToBeginningOfDocument:"; /* Ctrl + Home */
-	"^\UF72B" = "moveToEndOfDocument:"; /* Ctrl + End */
-	"$^\UF729" = "moveToBeginningOfDocumentAndModifySelection:"; /* Shift + Ctrl + Home */
-	"$^\UF72B" = "moveToEndOfDocumentAndModifySelection:"; /* Shift + Ctrl + End */
-}' > $HOME/Library/KeyBindings/DefaultKeyBinding.dict
-```
+	echo '{
+		/* Remap Home / End keys to be correct */
+		"\UF729" = "moveToBeginningOfLine:"; /* Home */
+		"\UF72B" = "moveToEndOfLine:"; /* End */
+		"$\UF729" = "moveToBeginningOfLineAndModifySelection:"; /* Shift + Home */
+		"$\UF72B" = "moveToEndOfLineAndModifySelection:"; /* Shift + End */
+		"^\UF729" = "moveToBeginningOfDocument:"; /* Ctrl + Home */
+		"^\UF72B" = "moveToEndOfDocument:"; /* Ctrl + End */
+		"$^\UF729" = "moveToBeginningOfDocumentAndModifySelection:"; /* Shift + Ctrl + Home */
+		"$^\UF72B" = "moveToEndOfDocumentAndModifySelection:"; /* Shift + Ctrl + End */
+	}' > $HOME/Library/KeyBindings/DefaultKeyBinding.dict
 
-## MySQL:
+
+# MySQL:
 
 - root-Passwort in Datei speichern und verwenden
 
@@ -355,11 +373,11 @@ Excel:
 		
 # PDF
 	
-#### Kompatibilitäts-Level anpassen
+### Kompatibilitäts-Level anpassen
 	
 	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -o output.pdf input.pdf	
 
-#### Kompression entfernen
+### Kompression entfernen
 
 	gs -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -o output.pdf input.pdf	
 
@@ -457,14 +475,14 @@ HTTPS auf HTTP umsetzen:
 	
 # UNIX-Terminal
 
-#### Anzahl der maximal anzeigbaren Spalten anpassen
+### Anzahl der maximal anzeigbaren Spalten anpassen
 		
 	stty -a | grep columns
 	stty columns 120
 	
 # VIM
 
-#### Beim Pasting keine Text-Formatierung durchführen
+### Beim Pasting keine Text-Formatierung durchführen
 
 	:set paste
 
@@ -482,7 +500,7 @@ HTTPS auf HTTP umsetzen:
 	
 # VirtualBox
 
-#### HardDrive <-> VDI klonen
+### HardDrive <-> VDI klonen
 
 	VBoxManage convertfromraw /dev/sda MyImage.vdi --format VDI
 	VBoxManage clonehd --format RAW file.vdi | dd of=/dev/sda
@@ -495,6 +513,6 @@ HTTPS auf HTTP umsetzen:
 	
 # Windows
 
-#### Pakete entfernen (via PowerShell), beispielsweise WindowsStore
+### Pakete entfernen (via PowerShell), beispielsweise WindowsStore
 		
 	Get-AppxPackage *windowsstore* | Remove-AppxPackage
