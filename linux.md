@@ -160,7 +160,27 @@ Check that Cpy%Sync is 100% finished; both copies are in sync then. Now let's br
 	lvcreate --snapshot --name <the-name-of-the-snapshot> --size <size> /dev/volume-group/logical-volume
 	lvcreate --name <logical-volume-name> --size <size> the-new-volume-group-name
 	dd if=/dev/volume-group/snapshot-name of=/dev/new-volume-group/new-logical-volume
-		
+
+
+# LUKS
+
+#### Verschlüsselte Partition anlegen und beim Login mounten
+	
+	lvcreate -L +512M kali-vg -n safe
+	cryptsetup luksFormat /dev/kali-vg/safe
+	cryptsetup luksOpen /dev/kali-vg/safe safe
+	mkfs.ext4 /dev/mapper/safe
+	mkdir Safe
+	mount /dev/mapper/safe Safe
+	touch Safe/test
+	umount Safe
+	cryptsetup luksClose safe
+
+In /etc/security/pam_mount.conf.xml folgende Zeile einfügen:
+
+	<volume user="heiko" fstype="crypt" path="/dev/kali-vg/safe" mountpoint="~/Safe" options="noatime,noexec,nodev,nosuid" />
+
+
 # systemctl
 
 #### Aktivierte Services auflisten

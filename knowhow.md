@@ -161,6 +161,13 @@ Zunächst die ID eines Projekts rausfinden, indem man den Source-Code der Reposi
 
 Anhand des Hashes das Verzeichnis unter /var/opt/gitlab/git-data/repositories/@hashed/ ermitteln. 
 
+### Gitlab-Instanzen herunterfahren und in Postgres-Shell droppen
+
+	gitlab-ctl stop
+	gitlab-ctl start postgresql
+	gitlab-psql
+	
+Die Postgres Datenbank lässt dann sich per '\c postgres' auswählen.
 
 # GPG
 
