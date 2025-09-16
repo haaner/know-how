@@ -43,7 +43,7 @@
 	apt --with-new-pkgs upgrade failing-package
 
 #### Dritt-Repository in Unattended Upgrades einbeziehen
-	
+
 Nach Ausführung von `apt policy`:
 
 	...
@@ -84,6 +84,35 @@ die Werte von o= und a= in der Datei /etc/apt/apt.conf.d/50unattended-upgrades i
 	
 	lsblk -lf
 		
+
+# Getty
+
+## Auto-Login aktivieren
+
+	systemctl edit getty@tty2 
+
+Im Editorfenster die folgenden Zeilen ergänzen:
+
+	[Service]
+	ExecStart=
+	ExecStart=-/sbin/agetty --noclear -a <username> %I $TERM
+
+Nach dem Abspeichern die systemd-Konfiguration neuladen und den TTY-Getty neustarten:
+
+	systemctl daemon-reload 
+	systemctl restart getty@tty2
+
+
+# LightDM
+
+## Auto-Login aktivieren
+
+/etc/lightdm/lightdm.conf bearbeiten und folgende Zeilen im Abschnitt [Seat:*] ergänzen bzw. den Abschnitt komplett hinzufügen:
+
+	[Seat:*]
+	autologin-user=DEIN_BENUTZERNAME
+	autologin-user-timeout=0
+
 # MD
 
 #### RAID1 anlegen
@@ -198,6 +227,7 @@ In /etc/security/pam_mount.conf.xml folgende Zeile einfügen:
 #### Service restarten
 
 	systemctl restart apache2 
+
 
 # UFW
 
