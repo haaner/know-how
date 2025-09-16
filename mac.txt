@@ -29,7 +29,7 @@ defaults write com.apple.mail PreferPlainText -bool TRUE
 
 defaults write -g NSInitialToolTipDelay -int 10000
 
-### Home/End Key-Binding korrigieren
+# Key-Bindings korrigieren
 
 ```
 mkdir -p $HOME/Library/KeyBindings
@@ -47,7 +47,15 @@ echo '{
 }' > $HOME/Library/KeyBindings/DefaultKeyBinding.dict
 ```
 
-### Hartnäckige Dateien entfernen:
+Zusätzlich in Terminal.app:
+
+Definiere zwei Mappings im Einstellungen / Profile / Tastatur - Reiter 
+
+	Home	\033OH (Das \033 wird erzeugt ducrh die ESC-Taste)
+	End		\033OF
+
+
+# Hartnäckige Dateien entfernen:
 
 1. command-r boot to recovery
 2. csrutil disable in Terminal to disable SIP
