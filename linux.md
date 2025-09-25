@@ -28,6 +28,10 @@
 	apt-key del 3B4FE6ACC0B21F32
 	mv key.gpg /etc/apt/trusted.gpg.d
 				
+#### Security-Updates anzeigen
+
+	apt list --upgradable | grep security
+
 #### Nur Security-Updates einspielen
 	
 	apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install
