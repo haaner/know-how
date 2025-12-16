@@ -178,6 +178,10 @@ Die Postgres Datenbank lässt dann sich per '\c postgres' auswählen.
 	gpg --armor --export KEY_ID > key.asc
 	gpg --delete-keys KEY_ID
 
+### Key(s) von speziellem Keyserver abholen und in separatem Keyring speichern
+
+	gpg --no-default-keyring --keyring gnupg-ring:/tmp/onlyoffice.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys CB2DE8E5
+
 
 # Grub
 

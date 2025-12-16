@@ -55,7 +55,26 @@ Nach Ausführung von `apt policy`:
 die Werte von o= und a= in der Datei /etc/apt/apt.conf.d/50unattended-upgrades innerhalb von Unattended-Upgrade::Allowed-Origins folgendermaßen hinzufügen:
 
    	"LP-PPA-ondrej-php:${distro_codename}";
-				
+
+Innerhalb des Unattended-Upgrade::Origins-Pattern kann man auch mit erweiterten Syntaxen der folgenden Form arbeiten:
+
+	Unattended-Upgrade::Origins-Pattern {
+			"origin=https://packager.io/gh/zammad/zammad,component=main";
+			"o=elastic,a=stable";
+			"site=download.onlyoffice.com";
+	};
+
+Die Keywords der Release-Patterns lauten:
+
+    a, archive, or suite
+    c or component
+    l or label
+    o or origin
+    n or codename
+    oder einen Hostnamen vermittels *site*
+
+Um obige Parameter zu ermitteln sind die Dateien unterhalb von /var/lib/apt/lists/HOSTNAME_*_InRelease relevant. Der bfehl 
+
 #### Manuell installierte Pakete anzeigen
 
 	apt-mark showmanual		
