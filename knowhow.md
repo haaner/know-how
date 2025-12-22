@@ -169,6 +169,20 @@ Anhand des Hashes das Verzeichnis unter /var/opt/gitlab/git-data/repositories/@h
 	
 Die Postgres Datenbank lässt dann sich per '\c postgres' auswählen.
 
+
+# Postgres
+
+### Datenbanken auflisten, Db selektieren und alle Tabellen darin auflisten
+
+   \l
+   \c mattermost
+   \dt
+
+### Alle Tabellen innerhalb aller Schemas listen
+
+   \dt *.*
+
+
 # GPG
 
 ### Key(s) aus einer GPG-Datei extrahieren und im ASCII-Format speichern
