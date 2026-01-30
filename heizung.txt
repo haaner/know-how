@@ -1,0 +1,34 @@
+Heizwasservolumen: 2 Pufferspeicher mit jeweils 1000L + 11 Radiatoren mit ca. 14L Wasser + Fussbodenheizung (Wohnzimmer, Bad, Wirtschaftsraus, 100qm entsprechen 150L Wasser) + Rohrleitungsinhalt:
+1000 + 1000 + 150 + 150 + 50L = 2350 Liter
+
+MAG-Nennvolumen = Heizwasser-Volumen / 10:
+2300 Liter / 10 = 235L
+
+Heizungsdruck bzw. Vordruck = (Höhe bis zum höchsten Heizkörper im Haus / 10) + 0.5 bar:
+3.6 / 10 = 0.36 + 0.5 = 0.86 bar (bei kalter Heizung, Wassertemperatur < 40 ºC)
+0.86 bar (graues MAG) - 1.4*0.1 bar = 0.72 bar (weißes MAG) 
+
+Anlagendruck = Vordruck (niedrigstes MAG) + 0.2 bar:
+0.86 + 0.2 = 1.06 bar 
+
+---
+
+Wichtig: 
+
+Bitte beachten Sie, daß es bei einer heißen / warmen Heizungsanlage zu kritischen Situationen kommen kann, wenn kein MAG (mehr) im System wirksam ist!
+Bei weiterer Erwärmung wird Wasser aus der Kesselsicherheitsgruppe austreten.
+Bei Abkühlung wird Luft in Ihre Heizung einströmen, falls Sie einen offenen Schnellentlüfter im System haben (in unseren Kesselsicherheitsgruppen enthalten; wir bieten zu jedem Speicher einen Schnellentlüfter mit an, wobei ein Schnellentlüfter in Eckausführung wegen der einfacheren Wartung vorzuziehen ist).
+Sollten Sie aber keinen Entlüfter mit Lufteintritt haben, kann bei stärkerer Abkühlung ohne wirksames Ausdehnungsgefäß Ihre Heizung schwer beschädigt werden! Im schlimmsten Fall wird Ihr Pufferspeicher hinterher wie eine zerquetschte Getränkedose aussehen!
+
+Sind mehrere Ausdehnungsgefäße in einem geschlossenen Heizungssystem verbaut, ist es unbedingt notwendig, alle MAG auf den gleichen Vordruck zu überprüfen und gegebenenfalls nachzufüllen bzw. abzulassen! Wird dies vernachlässigt, wirkt zunächst immer nur das Gefäß mit dem niedrigsten Vordruck, bis der Druck des nächsten erreicht wird. Ist eines der Gefäße gar mit einem Vordruck in der Nähe des Auslösedrucks des Sicherheitsventils (meist 3 bar), so wird es kaum wirken und Wasser über das Sicherheitsventil austreten.
+Bitte achten Sie hierbei darauf, daß alle MAG in der gleichen Höhe montiert sind. Ein Höhenunterschied von 1 m bedeutet, daß das höher montierte Gefäß 0,1 bar weniger Vordruck bekommen muß! 
+
+siehe: https://www.killus-technik.de/de/heizungszubehoer/ausdehnungsgefaesse-225/wissenswertes/
+
+--- 
+
+Fazit:  
+
+Wenn immer wieder Luft ins System kommt, ist sehr wahrscheinlich der Vordruck im MAG zu gering bzw. nicht mehr vorhanden (bei Membrandefekt).
+
+Grund: Wenn der Vordruck zu gering ist, dann nimmt das Heizungswasser bei Erhitzung den maximal möglichen Raum im MAG ein. Bei weiterer Druckerhöhung / Erhitzung tritt dann Wasser über das Sicherheitsventil aus - bei Abkühlung zieht das System dann über den Entlüfter Luft ins System!
