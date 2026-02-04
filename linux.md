@@ -248,6 +248,31 @@ In /etc/security/pam_mount.conf.xml folgende Zeile einfügen:
 	systemctl restart apache2 
 
 
+# Conntrack
+
+#### Alle Netzwerkverbindungen entfernen, die halboffen sind
+
+	conntrack -D -p tcp --state SYN_RECV
+
+
+# NFTables
+
+#### Regeln auflisten
+
+	nft list ruleset
+
+#### Sepzielle Tabelle des Regelwerks anzeigen
+
+	nft list table inet f2b-table
+
+
+# Ubuntu
+
+#### ESM Generve abstellen
+
+    apt remove ubuntu-pro-client
+
+
 # UFW
 
 #### Regeln auflisten
