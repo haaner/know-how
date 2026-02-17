@@ -532,9 +532,16 @@ HTTPS auf HTTP umsetzen:
 	
 # Xen
 
+### Xen Hosts listen, runterfahren, killen, starten
+
 	xl list 
-	xl destroy 
+	xl destroy win2008r2
+    xl shutdown win2008r2
 	xl create /etc/xen/win2008r2
+
+### Gesamten verfügbaren Speicher der phys. Maschine anzeigen
+
+    xl info | grep memory
 	
 # Windows
 
