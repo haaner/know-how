@@ -1,3 +1,16 @@
+# APC
+
+### Status der USV abfragen
+
+    apcaccess
+
+### Batterie der USV kalibrieren und Datum ändern
+
+    systemctl stop apcupsd
+    apctest
+
+10 bzw. 4 auswählen
+
 # apt / dpkg 
 
 #### Installierte Pakete der Größe nach sortieren auflisten
@@ -273,6 +286,14 @@ In /etc/security/pam_mount.conf.xml folgende Zeile einfügen:
     apt remove ubuntu-pro-client
 
 
+# (Pseudo-)Terminal
+
+### Anzahl der maximal anzeigbaren Spalten anpassen
+		
+	stty -a | grep columns
+	stty columns 120
+
+
 # UFW
 
 #### Regeln auflisten
@@ -282,3 +303,45 @@ In /etc/security/pam_mount.conf.xml folgende Zeile einfügen:
 #### Ports freigeben
 		
 	ufw allow proto tcp from 88.99.12.250 to any port 22,5666 comment "Hetzner Nagios(neu)"
+
+	
+# VIM
+
+### Beim Pasting keine Text-Formatierung durchführen
+
+	:set paste
+
+
+# VIMdiff
+
+	vimdiff /etc/orig /etc/new
+	
+	]c :	next difference
+	[c :	previous difference
+	do 		Gg.überliegende Seite übernehmen (obtain)
+	dp 		Momentane Seite behalten (put)
+	zo 		open folded text
+	zc 		close folded text
+	Ctrl-W W toggle between diff columns
+
+	
+# VirtualBox
+
+### HardDrive <-> VDI klonen
+
+	VBoxManage convertfromraw /dev/sda MyImage.vdi --format VDI
+	VBoxManage clonehd --format RAW file.vdi | dd of=/dev/sda
+
+
+# Xen
+
+### Hosts listen, runterfahren, killen, starten
+    
+    xl list 
+    xl destroy win2008r2
+    xl shutdown win2008r2
+    xl create /etc/xen/win2008r2
+
+### Gesamten verfügbaren Speicher der phys. Maschine anzeigen
+
+    xl info | grep memory	

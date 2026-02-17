@@ -22,8 +22,8 @@ Am Handy den Developer Modus + USB aktivieren (Telefoninfo / Softwareinfo / 7 ma
 	RewriteRule ^ - [E=CURPATH:%2,E=CURNAME:%3]
 	
 [ http://www.ckollars.org/apache-rewrite-htaccess.html#precedence ]
-		
-		
+
+	
 # Composer
 
 ### ext-gmp ignorieren (erst ab Composer 2 möglich)
@@ -497,52 +497,8 @@ www.staub-designlight.de -d staub-designlight.de -d www.staub-designlight.fr
 HTTPS auf HTTP umsetzen:
 	
 	$ socat OPENSSL-LISTEN:443,cert=cert.pem,key=key.pem,verify=0,fork,reuseaddr TCP4-CONNECT:localhost:80
-	
-# UNIX-Terminal
 
-### Anzahl der maximal anzeigbaren Spalten anpassen
-		
-	stty -a | grep columns
-	stty columns 120
-	
-# VIM
 
-### Beim Pasting keine Text-Formatierung durchführen
-
-	:set paste
-
-# VIMdiff
-
-	vimdiff /etc/orig /etc/new
-	
-	]c :	next difference
-	[c :	previous difference
-	do 		Gg.überliegende Seite übernehmen (obtain)
-	dp 		Momentane Seite behalten (put)
-	zo 		open folded text
-	zc 		close folded text
-	Ctrl-W W toggle between diff columns
-	
-# VirtualBox
-
-### HardDrive <-> VDI klonen
-
-	VBoxManage convertfromraw /dev/sda MyImage.vdi --format VDI
-	VBoxManage clonehd --format RAW file.vdi | dd of=/dev/sda
-	
-# Xen
-
-### Xen Hosts listen, runterfahren, killen, starten
-
-	xl list 
-	xl destroy win2008r2
-    xl shutdown win2008r2
-	xl create /etc/xen/win2008r2
-
-### Gesamten verfügbaren Speicher der phys. Maschine anzeigen
-
-    xl info | grep memory
-	
 # Windows
 
 ### Pakete entfernen (via PowerShell), beispielsweise WindowsStore
