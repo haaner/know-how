@@ -32,3 +32,8 @@ Fazit:
 Wenn immer wieder Luft ins System kommt, ist sehr wahrscheinlich der Vordruck im MAG zu gering bzw. nicht mehr vorhanden (bei Membrandefekt).
 
 Grund: Wenn der Vordruck zu gering ist, dann nimmt das Heizungswasser bei Erhitzung den maximal möglichen Raum im MAG ein. Bei weiterer Druckerhöhung / Erhitzung tritt dann Wasser über das Sicherheitsventil aus - bei Abkühlung zieht das System dann über den Entlüfter Luft ins System!
+
+
+Rücklaufanhebung - RLA:
+
+1 1/4 Zoll, 55 ºC
