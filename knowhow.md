@@ -285,9 +285,8 @@ Auszug aus History des internen Backup-Servers
 
 # MySQL:
 
-- root-Passwort in Datei speichern und verwenden
+### root-Passwort in Datei speichern und verwenden
 
-	```
 	$ cat < _END_ >> .my.cnf
 		
 	[client]
@@ -298,103 +297,142 @@ Auszug aus History des internen Backup-Servers
 
 	$ chmod 600 .my.cnf
 	$ mysql --defaults-extra-file=~/.my.cnf
-	```
 
-- root-Passwort ändern
+### root-Passwort ändern
 
-	```
 	ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'yourpasswd';
-	```
-
-- Alle Tabellen und den zugehörigen LOCK-Status anzeigen:
 	
-	```SHOW OPEN TABLES```
+### Alle Tabellen und den zugehörigen LOCK-Status anzeigen:
 	
-- Alle gelockten Tabellen anzeigen:
+	SHOW OPEN TABLES
+	
+### Alle gelockten Tabellen anzeigen:
     	
-	```SHOW OPEN TABLES WHERE In_use > 0```
+	SHOW OPEN TABLES WHERE In_use > 0
 		
--  Let's see the list of the current processes, one of them is locking your table(s)
+### Alle DB-Prozesse anzeigen
 
-	```SHOW PROCESSLIST;```
+	SHOW PROCESSLIST;
 
-- Kill one of these processes
+### DB-Prozess killen
 
-	```KILL <put_process_id_here>;```
+	KILL <put_process_id_here>;
 		
-- Keys für Abfrage ermitteln (für die Optimierung von Zugriffszeiten):
+### Keys für Abfrage ermitteln (für die Optimierung von Zugriffszeiten):
 	
-	```EXPLAIN SELECT SQL_NO_CACHE id, COUNT(*) FROM semmel.Person WHERE tmpName LIKE 'horst%'``` 
+	EXPLAIN SELECT SQL_NO_CACHE id, COUNT(*) FROM semmel.Person WHERE tmpName LIKE 'horst%' 
 		
-- Summierung über gruppierten Sub-Select:
+### Summierung über gruppierten Sub-Select:
 	
-	```
 	SELECT SUM(sub.totals) FROM (SELECT COUNT(*) AS totals FROM `MetaField` GROUP BY srcId) AS sub
-	```
-
-- Tabellen / Daten aus Binärdateien wiederherstellen:
-		
-	Wenn es sich um eine MyISAM-Tabelle handelt:
-
-	- Die Dateien *.frm, *.MYD, *.MYI in ein Datenbank-Verzeichnis "my_restore" unterhalb von /var/lib/mysql kopieren.
-
-		```
-		# cp myTable.* /var/lib/mysql/my_restore
-		# chown -R mysql:mysql /var/lib/mysql/my_restore
-		```
 	
-	- Den MySQL-Serverprozess reloaden bzw neu-starten:
-
-		```
-		$ /etc/init.d/mysql reload
-		```
-
-	---
-
-	Wenn sich um eine INNODB-Tabelle handelt:
-
-	- Die ursprünglichen CREATE-Befehle neu generieren lassen:
-
-		```
-		$ mysqlfrm --diagnostic myTable.frm > myTable.sql
-		```
-
-	- Das Row-Format der wiederherzustellenden-Tabelle ermitteln und gg.falls den CREATE-Befehl anpassen, z.B.
-
-		```
-		CREATE TABLE my_restore.myTable ... ENGINE=Innodb ROW_FORMAT=Compact
-		```
-
-	- Mit MySQL-Server verbinden und das sql-File sourcen und danach die implizit erzeugte ibd-Datei discarden:
-
-		```
-		mysql> SOURCE myTable.sql;
-		mysql> ALTER TABLE myTable DISCARD TABLESPACE;
-		```
-
-	- Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausführen:
-
-		```
-		$ cp myTable.ibd /var/lib/mysql/my_restore
-		$# chown -R mysql:mysql /var/lib/mysql/my_restore
+### Tabellen / Daten aus Binärdateien wiederherstellen:
 		
-		mysql> ALTER TABLE myTable IMPORT TABLESPACE;
-		```
+#### Wenn es sich um eine MyISAM-Tabelle handelt:
 
-	- Importierte Daten begutachten:
+Die Dateien *.frm, *.MYD, *.MYI in ein Datenbank-Verzeichnis "my_restore" unterhalb von /var/lib/mysql kopieren.
 
-		```mysql> SELECT * FROM myTable;```
+	# cp myTable.* /var/lib/mysql/my_restore
+	# chown -R mysql:mysql /var/lib/mysql/my_restore
+
+Den MySQL-Serverprozess reloaden bzw neu-starten:
+
+	$ /etc/init.d/mysql reload
+
+#### Wenn sich um eine INNODB-Tabelle handelt:
+
+Die ursprünglichen CREATE-Befehle neu generieren lassen:
+
+	$ mysqlfrm --diagnostic myTable.frm > myTable.sql
+
+Das Row-Format der wiederherzustellenden-Tabelle ermitteln und gg.falls den CREATE-Befehl anpassen, z.B.
+
+	CREATE TABLE my_restore.myTable ... ENGINE=Innodb ROW_FORMAT=Compact
+
+Mit MySQL-Server verbinden und das sql-File sourcen und danach die implizit erzeugte ibd-Datei discarden:
+
+	mysql> SOURCE myTable.sql;
+	mysql> ALTER TABLE myTable DISCARD TABLESPACE;
+
+Das wiederherzustellende ibd-File in das Datenbank-Verzeichnis "my_restore" kopieren und auf dem MySQL-Server folgenden Befehl ausführen:
+
+	$ cp myTable.ibd /var/lib/mysql/my_restore
+	$ chown -R mysql:mysql /var/lib/mysql/my_restore
 		
-Jquery: 
-	- Attribut-basierte Selektionen:
-		$('input[type="radio"][id^="DealCostPosition"][id*="_provideType"]').each(function() {});
-		
-Excel:
-	- Teilbereiche summieren:
+	mysql> ALTER TABLE myTable IMPORT TABLESPACE;
+	
+Importierte Daten begutachten:
 
-		=SUMMEWENN(A2:A10;"Bezahlt";B2:B10) 
-		=SUMME( -- die strg-taste gedr�ckt halten und alle zellen markieren, die addiert werden sollen - Klammer zu und RETURN dr�cken
-		=SUMME(B1:B4;B6:B8) (Bereiche definieren)		
+	mysql> SELECT * FROM myTable;
+		
+### Replikation einrichten:
+
+Schlüssel für Master erstellen:
+
+	$ cd /etc/mysql 
+	$ openssl req -x509 -newkey rsa:4096 -keyout master-private.pem -out master-public.pem -subj '/CN=master' -nodes -days 3650
+	$ openssl rsa -in master-private.pem -out master-private-compat.pem
+	$ cp master-public.pem ca-cert.pem
+
+Schlüssel in /etc/mysql/my.cnf angeben
+
+	# SSL for replication
+	ssl-ca = /etc/mysql/ca-cert.pem
+	ssl-cert = /etc/mysql/master-public.pem
+	ssl-key = /etc/mysql/master-private.pem
+
+Einen Replikationsuser auf dem Masterserver anlegen, der sich nur per SSL verbinden darf und dessen Client-Zertifikat das Subject 'slave1' haben muss:
+
+    GRANT REPLICATION CLIENT ON *.* TO 'ReplOnSlave1'@'%' IDENTIFIED BY 'qwertz';
+    GRANT USAGE ON *.* TO 'ReplOnSlave1'@'%' REQUIRE SSL;
+    GRANT USAGE ON *.* TO 'ReplOnSlave1'@'%' REQUIRE SUBJECT '/CN=slave1';
+
+
+Schlüssel auf Slave anlegen:
+
+	$ scp master:/etc/mysql/ca-cert.pem /etc/mysql
+	$ cd /etc/mysql
+	$ openssl req -x509 -newkey rsa:4096 -keyout slave1-private.pem -out slave1-public.pem -subj '/CN=slave1' -nodes 
+-days 3650
+	$ openssl rsa -in slave1-private.pem -out slave1-private-compat.pem
+	$ cat slave1-public.pem >> ca-cert.pem
+	$ scp ca-cert.pem master:/etc/mysql
+
+Test ob Slave sich verbinden kann:
+
+	$ mysql -u ReplOnSlave1 -p'qwertz' -hmaster --ssl-ca /etc/mysql/ca-cert.pem --ssl-cert /etc/mysql/slave1-public.pem --ssl-key /etc/mysql/slave1-private-compat.pem
+
+Slave mittels MySQL-Kommandos mit dem Master konnektieren:
+
+	slave> CHANGE MASTER TO 
+    -> MASTER_HOST='master',
+    -> MASTER_USER='ReplOnSlave1',
+    -> MASTER_PASSWORD='qwertz',
+    -> MASTER_LOG_FILE='mysql-bin.000008',
+    -> MASTER_LOG_POS=107,
+    -> MASTER_SSL=1,
+    -> MASTER_SSL_CA='/etc/mysql/ca-cert.pem',
+    -> MASTER_SSL_CERT='/etc/mysql/slave1-public.pem',
+    -> MASTER_SSL_KEY='/etc/mysql/slave1-private.pem',
+    -> Master_SSL_Verify_Server_Cert = 1;
+
+	slave> START SLAVE;
+	slave> show slave status
+
+[ siehe: https://www.unixe.de/mysql-replikation-ueber-ssl-absichern/ ]
+
+# Jquery: 
+
+### Attribut-basierte Selektionen:
+	$('input[type="radio"][id^="DealCostPosition"][id*="_provideType"]').each(function() {});
+		
+# Excel:
+
+### Teilbereiche summieren:
+
+	=SUMMEWENN(A2:A10;"Bezahlt";B2:B10) 
+	=SUMME( -- die STRG-Taste gedrückt halten und alle Zellen markieren, die addiert werden sollen - Klammer zu und RETURN drücken
+	=SUMME(B1:B4;B6:B8) (Bereiche definieren)		
 		
 # PDF
 	
@@ -459,16 +497,19 @@ SSL:
 		openssl genrsa -out privkey.pem 2048
 		openssl rsa -pubout -in privkey.pem -out pubkey.pem
 	
-	Entfernen der Passphrase aus einem privaten Schl�ssel
+	Entfernen der Passphrase aus einem privaten Schlüssel
 		openssl rsa -in privateKey.pem -out newPrivateKey.pem
 	
-	Zertifikate ausgeben:
+	Zertifikate ausgeben (remote):
 		openssl s_client -connect mail.intercorp.de:465
 		openssl s_client -connect mail.intercorp.de:25 -starttls smtp
 		openssl s_client -connect mail.intercorp.de:587 -starttls smtp
 
-	Ablaufdatum des Zertifikats ausgeben:
+	Ablaufdatum des Zertifikats ausgeben (remote):
 		echo "" | openssl s_client -servername staub-designlight.ch -connect shopware.intercorp.de:443 | openssl x509 -dates -noout
+    
+    Zertifikat anzeigen (lokal): 
+        openssl x509 -in crt-public.pem -text -noout
 
 	Zertifikate konvertieren: (siehe auch https://www.hasslinger.com/index.php/en/blog/ssl-zertifikate-mit-openssl-konvertieren)
 		openssl x509 -inform der -in lffepsprd1-rz-sued-bayern-de.crt -out certificate.pem
@@ -480,7 +521,7 @@ SSL:
 	Generieren eines neuen privaten Schl�ssels und eine neue Zertifikatsignierungsanforderung
 		openssl req -out CSR.csr -new -newkey rsa: 2048 -nodes -keyout privateKey.key
 		
-	Generieren einer Zertifikatsignierungsanforderung (Certificate Signing Request, CSR) f�r einen vorhandenen privaten Schl�ssel
+	Generieren einer Zertifikatsignierungsanforderung (Certificate Signing Request, CSR) für einen vorhandenen privaten Schlüssel
 		openssl req -out CSR.csr -key privateKey.key -new
 
 	Generieren einer Zertifikatsignierungsanforderung basierend auf einem vorhandenen Zertifikat
