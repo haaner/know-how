@@ -186,6 +186,21 @@ Nach dem Abspeichern die systemd-Konfiguration neuladen und den TTY-Getty neusta
 	grub-mkdevicemap -n
 	grub-install /dev/sda
 
+#### Re-Sync stoppen
+
+    echo frozen > /sys/block/md0/md/sync_action
+    echo none > /sys/block/md0/md/resync_start
+    echo idle > /sys/block/md0/md/sync_action
+
+#### Check bzw. Repair starten
+
+    echo check > /sys/block/md0/md/sync_action
+    echo repair > /sys/block/md0/md/sync_action
+
+#### Status anzeigen
+
+    cat /proc/mdstat
+
 # LVM
 
 #### Snapshot erstellen, wiederherstellen bzw. löschen:
