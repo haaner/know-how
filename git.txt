@@ -111,7 +111,7 @@
 	git rebase origin/ep2
 	git rebase --abort # if it fails
 			
-- Mehrere (ungepushte) Commits zu einem zusammenfassen	
+- Mehrere (ungepushte) Commits zu einem zusammenfassen
 
 	git rebase -i origin/master
 
@@ -132,6 +132,35 @@
 	squash 396b4a3 Tests pass
 	squash 9be7fdb Better comments
 	squash 7dba9cb All done
+
+- Zurückliegenden Commit editieren
+
+	git rebase -i 396b4a3
+
+	This will bring up your text editor (-i is for "interactive") with a file that looks like this:
+
+	pick 16b5fcc Code in, tests not passing
+	pick c964dea Getting closer
+	pick 06cf8ee Something changed
+
+	Mark the commit you like to edit (e):
+	
+	pick 16b5fcc Code in, tests not passing
+	pick c964dea Getting closer
+	edit 06cf8ee Something changed
+
+	Now undo the commit
+
+	git reset HEAD~1
+
+	Fix the things and commit your changes
+	
+	git add filex filey
+	git commit
+
+	git commit -a
+
+	git rebase --continue
 
 - Submodul hinzufügen:
 
