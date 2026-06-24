@@ -8,11 +8,14 @@ docker images
 docker container ls
 
 # Container mit spezifischen Namen starten
-docker container run --name alpia -it alpine:3.15.0 /bin/sh
+docker container run --name alpia -it alpine:3.23.5 /bin/sh
 
 # Container starten und dann Programm ausführen
 docker container start alpia
 docker container exec -it alpia /bin/sh
+
+# Container starten und aktuelles Verzeichnis bind-mounten
+docker run --name jail -it -v "$PWD":/work -w /work alpine:3.23.5 sh
 
 # Kopieren in den Container
 docker cp Downloads/linux_phat_client.tgz  alpia:/root/linux.tgz
@@ -31,7 +34,7 @@ docker ps -a --filter volume=ff6bf891801f0fd17d113a7098898f57f46cdf765b4e3575419
 
 # Container und sämtliche Volume- (und Bind-)Zuordnungen auflisten
 docker ps -a --format '{{ .ID }}' | xargs -I {} docker inspect -f '{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' {}
-
+		
 # Dockerfile builden und (nach Login) auf Docker-Hub bereitstellen
 # docker build -t haaner/forum-php:8.2 .
 # docker login
