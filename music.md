@@ -14,3 +14,14 @@ Die (kleine) Moll bzw. (große) Dur-Terz wird ersetzt durch die Sekunde (sus2) b
 ### 7-er Akkorde
 
 Der Grundton des Akkords wird um eine kleine Septime erhöht bzw. um einen Ganzton erniedrigt. Bei maj7 wird der Grundton um eine große Septime erhöht bzw. um einen Halbton erniedrigt.
+
+# Kadenz
+
+Tonika (I), Sub-Dominate (IV), Dominante (V)
+
+C-Dur hat als Moll-Parallele A-Moll
+G-Dur hat als Mol-Parallele E-Moll
+
+# Pentatonik
+
+A - C D E - G (A) bzw. C D E - G A ( - C )
