@@ -261,6 +261,32 @@ In /etc/security/pam_mount.conf.xml folgende Zeile einfügen:
 	<volume user="heiko" fstype="crypt" path="/dev/kali-vg/safe" mountpoint="~/Safe" options="noatime,noexec,nodev,nosuid" />
 
 
+# Netzwerk
+
+## Iptables
+### Standard-Regeln für V4 und V6
+
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p tcp -m multiport --dports 9000,9003 -j ACCEPT
+-A INPUT -i eth+ -j REJECT --reject-with icmp-port-unreachable
+COMMIT
+
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -p ipv6-icmp -j ACCEPT
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i eth+ -j REJECT --reject-with icmp6-port-unreachable
+COMMIT
+
 # systemctl
 
 #### Aktivierte Services auflisten
