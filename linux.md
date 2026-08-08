@@ -264,8 +264,10 @@ In /etc/security/pam_mount.conf.xml folgende Zeile einfügen:
 # Netzwerk
 
 ## Iptables
+
 ### Standard-Regeln für V4 und V6
 
+```iptables
 *filter
 :INPUT ACCEPT [0:0]
 :FORWARD DROP [0:0]
@@ -286,6 +288,15 @@ COMMIT
 -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A INPUT -i eth+ -j REJECT --reject-with icmp6-port-unreachable
 COMMIT
+```
+
+### Masquerading
+
+modprobe ipt_MASQUERADE
+iptables -F; iptables -t nat -F; iptables -t mangle -F
+iptables -t nat -A POSTROUTING -o wlan0 -j SNAT --to 192.168.0.7
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
 
 # systemctl
 
