@@ -38,7 +38,7 @@ docker ps -a --format '{{ .ID }}' | xargs -I {} docker inspect -f '{{ .Name }}{{
 # Dockerfile builden und (nach Login) auf Docker-Hub bereitstellen
 # docker build -t haaner/forum-php:8.2 .
 # docker login
-# docker push haaner/forum-php
+# docker push haaner/forum-php:8.2
 
 # Docker-Compose ausführen und detachen
 docker compose up -d
