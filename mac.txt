@@ -67,4 +67,43 @@ Definiere zwei Mappings im Einstellungen / Profile / Tastatur - Reiter
 
 [ SIP: https://support.apple.com/en-us/HT204899 ]
 
+# Homebrew
+
+## Formula anpassen und installieren
+
+brew deps --tree mysql
+brew edit mysql
+HOMEBREW_NO_INSTALL_FROM_API=1 brew install --build-from-source --verbose --debug mysql
+
+## Deps ignorieren
+
+brew deps -n formula
+dep1
+dep2
+
+brew install dep1
+brew install --ignore-dependencies formula
+
+## Alte-Version pinnen
+
+brew install llvm@17
+brew pin llvm@17
+
+
+# Steam
+
+## Lauffähiges Steam auf alten macOS-Versionen
+
+1. Install Steam as normal. Do not the open the app once you drag it to the application folder.
+Open Terminal and run this command:
+
+open -a Steam --args -forcesteamupdate -forcepackagedownload -overridepackageurl https://web.archive.org/web/20231212191717if_/media.steampowered.com/client -exitsteam
+
+2. To prevent unintentional updates which may cause the client to be bricked, create a steam.cfg on /Applications/Steam.app/Contents/MacOS with this:
+
+Code:
+
+BootStrapperInhibitAll=enable
+BootStrapperForceSelfUpdate=disable
+
 # vim: ts=4:sw=4
