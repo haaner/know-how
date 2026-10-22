@@ -376,7 +376,7 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 	zc 		close folded text
     :wincmd w Wechsle zum nächsten Fenster
     :wincmd W Wechsle zum vorherigen Fenster
-	 [ Ctrl-W W toggle between diff columns -- besser nicht verwenden, weil Window-Manager dann evtl. das Fenster schließen!!! ] 
+    [ Ctrl-W W toggle between diff columns -- besser nicht verwenden, weil Window-Manager dann evtl. das Fenster schließen!!! ] 
 
 	
 # VirtualBox
