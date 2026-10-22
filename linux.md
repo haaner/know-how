@@ -374,7 +374,9 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 	dp 		Momentane Seite behalten (put)
 	zo 		open folded text
 	zc 		close folded text
-	Ctrl-W W toggle between diff columns
+    :wincmd w Wechsle zum nächsten Fenster
+    :wincmd W Wechsle zum vorherigen Fenster
+	 [ Ctrl-W W toggle between diff columns -- besser nicht verwenden, weil Window-Manager dann evtl. das Fenster schließen!!! ] 
 
 	
 # VirtualBox
