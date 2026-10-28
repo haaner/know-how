@@ -285,6 +285,21 @@ Auszug aus History des internen Backup-Servers
 
 # MySQL:
 
+### Passwortlosen root-Zugriff via Socket ermöglichen
+
+    runuser -u mysql -- /usr/sbin/mariadbd --skip-grant-tables --skip-networking
+    mariadb --no-defaults --protocol=socket -uroot
+
+Innerhalb der Sitzung folgendes ausführen:
+
+    FLUSH PRIVILEGES;
+    ALTER USER 'root'@'localhost' IDENTIFIED VIA unix_socket;
+    exit
+
+Das initiale FLUSH_PRIVILEGES ist notwendig, damit die zuvor via skip-grant-tables ausgelasenen Berechtigungstabellen nachgeladen werden auf die dann das ALTER-Kommando wirkt.
+
+Nun den MariaDB-Prozess killen und den Server wie gewohnt starten.
+
 ### root-Passwort in Datei speichern und verwenden
 
 	$ cat < _END_ >> .my.cnf
@@ -450,14 +465,29 @@ Rsync:
 	
 		rsync -avz --exclude '/proc' --exclude '/sys' --exclude '/dev' --exclude '/boot' --exclude '/etc/fstab' --exclude '/etc/network' --exclude '/etc/netplan' / 88.99.12.250:/
 		
-Screen:
-		Ctrl+a S - Split screen	(horizontally)
-		Ctrl+a | - Split screen (vertically)
+
+# Screen:
+
+### Detaching
+
+    Ctrl+a d - Detach 
+
+Achtung - während eines Ubuntu/Debian Release-Upgrades ist die Sequenz:
+    
+    Ctrl+@ d
+
+### Anderweitige Key-Kombinationen
+
+    Ctrl+a S - Split screen	(horizontally)
+	Ctrl+a | - Split screen (vertically)
 			
-		Ctrl+a TAB - Change Screen Window
-		Ctr+a ESC - Copy / paste mode => SPACE - Set mark
+	Ctrl+a TAB - Change Screen Window
+	Ctrl+a ESC - Copy / paste mode => SPACE - Set mark
+
+    Ctrl+a ? - Cheat Sheet
 		
-		http://www.pixelbeat.org/lkdb/screen.html
+	http://www.pixelbeat.org/lkdb/screen.html
+
 
 SCSS: 
 
