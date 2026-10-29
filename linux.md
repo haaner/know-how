@@ -159,7 +159,7 @@ Nach dem Abspeichern die systemd-Konfiguration neuladen und den TTY-Getty neusta
 #### Platte in RAID-Verbund aufnehmen
 	
 	mdadm --manage /dev/md0 --add /dev/sda1
-		
+
 #### RAID löschen
 	
 	mdadm --stop /dev/md1 
@@ -200,6 +200,20 @@ Nach dem Abspeichern die systemd-Konfiguration neuladen und den TTY-Getty neusta
 #### Status anzeigen
 
     cat /proc/mdstat
+
+### RAID-Verbund gewaltsam nur mit einer Platte starten
+
+Damit kann ein Array mit einer Platte gestartet werden, die evtl. sogar als FAILED markiert und entfernt wurde - die bisherigen Platten des Arrays werden beim Assemblieren nicht berücksichtigt - allerdings gibt es kein Zurück mehr, sobald der Superblock, der eigentlichen ursprünglich aktiven Array sdb2 genullt wurde - das Zeroing ist aber notwendig sonst wird beim nächsten regulären Array-Start sdb2 wieder als führend angesehen.
+
+Alles in allem - vorher ein Backup machen, wenn man folgendes zum ersten Mal probiert!
+
+    mdadm --assemble --readonly --force /dev/md1 /dev/sda2
+	mdadm --zero-superblock /dev/sdb2
+    mdadm --stop /dev/md1
+    mdadm --assemble --force /dev/md1 /dev/sda2
+    mdadm --stop /dev/md1
+    mdadm --start /dev/md1 # Nun sollte der Array nur noch aus sda2 bestehen
+
 
 # LVM
 
