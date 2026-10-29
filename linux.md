@@ -333,10 +333,14 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 
 # Ubuntu
 
-#### ESM Generve abstellen
+#### ESM / Pro Generve abstellen
 
-    apt remove ubuntu-pro-client
-
+    apt install update-notifier-common
+    mv /usr/lib/update-notifier /root/
+    apt purge update-notifier-common
+    apt purge ubuntu-pro-client
+    apt autoremove --purge
+    mv /root/update-notifier /usr/lib/
 
 # (Pseudo-)Terminal
 
